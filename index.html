@@ -4,26 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Smart tools for small business. AI-assisted automation, streamlined systems, and real-world results." />
-  <title>The Solution Desk</title>
+  <title>The Solution Desk — Smart Business Automation</title>
   <link rel="icon" href="logo.png" type="image/png" sizes="32x32" />
   <style>
     :root {
-      --accent-color: #D4AF37;      /* Gold from your logo */
-      --turquoise: #00B2A9;          /* Turquoise from your logo */
-      --dark-blue: #0A192F;          /* Dark blue from your logo */
-      --background-color: #0e1b25;
-      --text-color: #f1f1f1;
-      --card-bg: #1a2b39;
-      --primary-color: var(--accent-color);
-      --transition: all 0.3s ease;
+      --accent: #D4AF37;            /* Primary brand gold */
+      --accent-hover: #e6c05c;      /* Slightly lighter gold for hover */
+      --background: #0e1b25;        /* Dark background */
+      --card-bg: #1a2b39;           /* Slightly lighter dark for cards */
+      --text: #f1f1f1;              /* Main text color */
+      --text-muted: #a0c4e4;        /* Secondary text color */
+      --border: rgba(255,255,255,0.1); /* Subtle borders */
+      --transition: all 0.2s ease;   /* Smoother transitions */
     }
     body {
       margin: 0;
       padding: 2rem 1rem;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--background-color);
-      color: var(--text-color);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--background);
+      color: var(--text);
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
     .container {
       max-width: 1000px;
@@ -32,9 +34,9 @@
     }
     header {
       text-align: center;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
       padding: 2rem 0 3rem;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid var(--border);
       position: relative;
     }
     .logo {
@@ -61,15 +63,16 @@
     }
     .tagline {
       font-size: 1.5rem;
-      color: #a0c4e4;
-      margin-bottom: 1.5rem;
+      color: var(--text-muted);
+      margin: 0.5rem 0 1.5rem;
       font-weight: 300;
     }
     .mission {
       font-size: 1.25rem;
       max-width: 700px;
       margin: 0 auto 2rem;
-      color: var(--turquoise);
+      color: var(--text);
+      line-height: 1.6;
     }
     .projects {
       display: grid;
@@ -95,51 +98,40 @@
       border-radius: 8px;
       padding: 1.5rem;
       transition: var(--transition);
-      border-left: 8px solid var(--turquoise);
+      border-left: 4px solid var(--accent);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
     }
     .project-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }
     .project-card h3 {
-      margin-top: 0;
-      color: var(--gold);
-    }
-    .project-card .btn {
-      display: inline-block;
-      background: var(--turquoise);
-      color: var(--dark-blue);
-      padding: 0.6rem 1.2rem;
-      border-radius: 4px;
-      font-weight: 600;
-      text-decoration: none;
-      margin-top: 1rem;
-      transition: all 0.3s ease;
-      border: 2px solid var(--turquoise);
-      font-size: 0.9rem;
-    }
-    .project-card .btn:hover {
-      background: transparent;
-      color: var(--turquoise);
-      transform: translateY(-2px);
+      margin: 0 0 0.75rem 0;
+      color: var(--accent);
+      font-size: 1.4rem;
     }
     /* Project card buttons */
     .project-card .btn {
       display: inline-block;
-      background: var(--turquoise);
-      color: var(--dark-blue);
+      background: var(--accent);
+      color: var(--background);
       padding: 0.6rem 1.2rem;
       border-radius: 4px;
       font-weight: 600;
       text-decoration: none;
-      margin-top: 1rem;
-      transition: all 0.3s ease;
-      border: 2px solid var(--turquoise);
-      font-size: 0.9rem;
+      margin-top: auto;
+      transition: var(--transition);
+      border: 2px solid var(--accent);
+      font-size: 0.95rem;
+      width: fit-content;
     }
     .project-card .btn:hover {
-      background: transparent;
-      color: var(--turquoise);
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
       transform: translateY(-2px);
       box-shadow: 0 5px 15px rgba(0, 178, 169, 0.2);
     }
@@ -152,14 +144,15 @@
       color: #a0c4e4;
     }
     .brand-message {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       font-weight: 300;
-      color: var(--accent-color);
-      margin-bottom: 1rem;
-      font-style: italic;
+      color: var(--text);
+      margin: 2rem 0 1rem;
+      font-style: normal;
+      line-height: 1.4;
     }
     a {
-      color: var(--primary-color);
+      color: var(--accent);
       text-decoration: none;
       font-weight: 600;
       transition: var(--transition);
@@ -169,18 +162,18 @@
       content: '';
       position: absolute;
       width: 0;
-      height: 2px;
+      height: 1px;
       bottom: -2px;
       left: 0;
-      background-color: var(--accent-color);
+      background-color: var(--accent);
       transition: var(--transition);
     }
     a:not(.btn):hover:after {
       width: 100%;
     }
     a:hover {
-      color: #4dd0e1;
-      text-decoration: underline;
+      color: var(--accent-hover);
+      text-decoration: none;
     }
     @media (max-width: 768px) {
       h1 {

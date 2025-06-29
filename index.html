@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Smart tools for small business. AI-assisted automation, streamlined systems, and real-world results." />
+  <title>The Solution Desk</title>
+  <style>
+    :root {
+      --gold: #D4AF37;      /* Gold from your logo */
+      --turquoise: #00B2A9;  /* Turquoise from your logo */
+      --dark-blue: #0A192F;  /* Dark blue from your logo */
+      --background-color: #0e1b25;
+      --text-color: #f1f1f1;
+      --card-bg: #1a2b39;
+      --primary-color: var(--gold);  /* Using gold as primary color */
+    }
+    body {
+      margin: 0;
+      padding: 2rem 1rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding: 2rem 0 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+    }
+    .logo {
+      display: block;
+      margin: 0 auto 1.5rem;
+      width: 150px;
+      height: auto;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+    .logo:hover {
+      transform: scale(1.05);
+    }
+    h1 {
+      font-size: 2.8rem;
+      margin: 0 0 0.5rem;
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+    .tagline {
+      font-size: 1.5rem;
+      color: #a0c4e4;
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+    }
+    .mission {
+      font-size: 1.25rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      color: #d1e0ed;
+    }
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .centered-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: nowrap;
+      gap: 1.5rem;
+      margin: 0 auto;
+      max-width: 900px;
+    }
+    .centered-row .project-card {
+      flex: 1;
+      min-width: 280px;
+      max-width: 400px;
+    }
+    .project-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-left 0.3s ease;
+      border-left: 4px solid var(--turquoise);
+    }
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    .project-card h3 {
+      margin-top: 0;
+      color: var(--gold);
+    }
+    .main-site-link {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--dark-blue) !important;
+      padding: 0.8rem 1.5rem;
+      border-radius: 30px;
+      font-weight: 600;
+      text-decoration: none !important;
+      margin-top: 1.5rem;
+      transition: all 0.3s ease;
+      border: 2px solid var(--primary-color);
+    }
+    .main-site-link:hover {
+      background: var(--turquoise);
+      color: white !important;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,188,212,0.3);
+    }
+    footer {
+      margin-top: 4rem;
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.9rem;
+      color: #a0c4e4;
+    }
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+    a:hover {
+      color: #4dd0e1;
+      text-decoration: underline;
+    }
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      .tagline {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <!-- Logo -->
+      <img
+        src="logo.png"
+        alt="The Solution Desk logo"
+        class="logo"
+      />
+
+      <!-- Title & Tagline -->
+      <h1>The Solution Desk</h1>
+      <p class="tagline">Smart tools for small business</p>
+      <p class="mission">
+        AI-assisted automation, streamlined systems, and real-world results for
+        small businesses looking to optimize their operations.
+      </p>
+      <a
+        href="https://thesolutiondesk.ca"
+        class="main-site-link"
+        target="_blank"
+        rel="noopener"
+      >
+        Visit our main website →
+      </a>
+    </header>
+
+    <main>
+      <h2>Our Projects</h2>
+      <div class="projects">
+        <div class="project-card">
+          <h3>File Organizer</h3>
+          <p>Automated file management system to keep your digital workspace clean and organized.</p>
+        </div>
+        <div class="project-card">
+          <h3>Process Optimization App</h3>
+          <p>Streamline your business processes with AI-powered optimization tools.</p>
+        </div>
+        <div class="project-card">
+          <h3>Job Application Bot</h3>
+          <p>Automate your job search with our intelligent application assistant.</p>
+        </div>
+      </div>
+      <div class="centered-row">
+        <div class="project-card">
+          <h3>FocusFlow</h3>
+          <p>Enhance productivity with our focus and time management application.</p>
+        </div>
+        <div class="project-card">
+          <h3>More to Come</h3>
+          <p>Stay tuned for more innovative solutions in automation and AI. We're constantly developing new tools to help small businesses thrive.</p>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>Have questions or want to learn more? <a href="mailto:info@thesolutiondesk.ca">Contact us</a> at info@thesolutiondesk.ca</p>
+      <p>© 2025 The Solution Desk. All rights reserved. | <a href="https://thesolutiondesk.ca" target="_blank" rel="noopener">Main Website</a></p>
+    </footer>
+  </div>
+</body>
+</html>

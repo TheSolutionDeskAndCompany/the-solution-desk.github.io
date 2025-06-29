@@ -74,15 +74,17 @@
     .centered-row {
       display: flex;
       justify-content: center;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
       gap: 1.5rem;
       margin: 0 auto;
       max-width: 900px;
     }
     .centered-row .project-card {
-      flex: 1;
+      flex: 1 1 300px;
       min-width: 280px;
-      max-width: 400px;
+      max-width: 350px;
+      display: flex;
+      flex-direction: column;
     }
     .project-card {
       background: var(--card-bg);
@@ -90,6 +92,8 @@
       padding: 1.5rem;
       transition: transform 0.3s ease, box-shadow 0.3s ease, border-left 0.3s ease;
       border-left: 4px solid var(--primary-color);
+      height: 100%;
+      box-sizing: border-box;
     }
     .project-card:hover {
       transform: translateY(-5px);
@@ -196,6 +200,8 @@
         <div class="project-card">
           <h3>More to Come</h3>
           <p>New automation and AI tools coming soon.</p>
+          <div style="flex-grow: 1;"></div>
+          <div class="btn" style="visibility: hidden;">Learn More</div>
         </div>
       </div>
     </main>

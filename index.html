@@ -83,42 +83,39 @@
     .centered-row {
       display: flex;
       justify-content: center;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
       gap: 1.5rem;
       margin: 0 auto;
       max-width: 900px;
     }
     .centered-row .project-card {
-      flex: 1;
+      flex: 1 1 300px;
       min-width: 280px;
-      max-width: 400px;
+      max-width: 350px;
+      display: flex;
+      flex-direction: column;
     }
     .project-card {
       background: var(--card-bg);
       border-radius: 8px;
       padding: 1.5rem;
-      transition: var(--transition);
-      border-left: 4px solid var(--accent);
-      height: 100%;
-      display: flex;
-      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-left: 4px solid var(--primary-color);
     }
     .project-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }
     .project-card h3 {
-      margin: 0 0 0.75rem 0;
-      color: var(--accent);
-      font-size: 1.4rem;
+      margin-top: 0;
+      color: var(--primary-color);
     }
-    /* Project card buttons */
-    .project-card .btn {
+    .main-site-link {
       display: inline-block;
-      background: var(--accent);
-      color: var(--background);
-      padding: 0.6rem 1.2rem;
-      border-radius: 4px;
+      background: var(--primary-color);
+      color: var(--background-color) !important;
+      padding: 0.8rem 1.5rem;
+      border-radius: 30px;
       font-weight: 600;
       text-decoration: none;
       margin-top: auto;
@@ -127,11 +124,9 @@
       font-size: 0.95rem;
       width: fit-content;
     }
-    .project-card .btn:hover {
-      background: var(--accent-hover);
-      border-color: var(--accent-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+    .main-site-link:hover {
+      background: transparent;
+      color: var(--primary-color) !important;
       transform: translateY(-2px);
       box-shadow: 0 5px 15px rgba(0, 178, 169, 0.2);
     }
@@ -257,7 +252,9 @@
         </div>
         <div class="project-card">
           <h3>More to Come</h3>
-          <p>Stay tuned for more innovative solutions in automation and AI. We're constantly developing new tools to help small businesses thrive.</p>
+          <p>New automation and AI tools coming soon.</p>
+          <div style="flex-grow: 1;"></div>
+          <div class="btn" style="visibility: hidden;">Learn More</div>
         </div>
       </div>
     </main>

@@ -1,9 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ project.name }} - The Solution Desk</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Site Info -->
+  <title>{{ project.name }} — The Solution Desk</title>
+  <meta name="description" content="{{ project.description }}" />
+  <meta name="author" content="Amber Boudreau" />
+  <meta name="keywords" content="automation, AI, CLI, developer tools, {{ project.name }}" />
+  <link rel="canonical" href="https://www.thesolutiondesk.ca/projects/{{ project.slug }}" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}" />
+
+  <!-- OG for social sharing -->
+  <meta property="og:title" content="{{ project.name }}" />
+  <meta property="og:description" content="{{ project.description }}" />
+  <meta property="og:image" content="{{ url_for('static', filename='logo.png') }}" />
+  <meta property="og:url" content="https://www.thesolutiondesk.ca/projects/{{ project.slug }}" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ project.name }}" />
+  <meta name="twitter:description" content="{{ project.description }}" />
+  <meta name="twitter:image" content="{{ url_for('static', filename='logo.png') }}" />
+
+  <!-- Theme color -->
+  <meta name="theme-color" content="#0a0f1c" />
+
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-900 text-white font-sans">

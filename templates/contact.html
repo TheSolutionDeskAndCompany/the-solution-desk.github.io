@@ -9,7 +9,10 @@
 <body class="bg-gray-900 text-white font-sans">
   <nav class="p-6 bg-gray-800">
     <div class="container mx-auto flex justify-between">
-      <a href="/" class="text-2xl font-bold">The Solution Desk</a>
+      <div class="flex items-center">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="The Solution Desk Logo" class="h-10 mr-3" />
+        <a href="/" class="text-2xl font-bold">The Solution Desk</a>
+      </div>
       <div class="space-x-4">
         <a href="/projects" class="hover:underline">Projects</a>
         <a href="/tools" class="hover:underline">Tools</a>

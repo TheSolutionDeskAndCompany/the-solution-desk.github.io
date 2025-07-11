@@ -25,6 +25,10 @@
     <p class="mt-2 text-gray-400 max-w-xl mx-auto">AI-assisted automation, streamlined systems, and real-world results for small businesses looking to optimize their operations.</p>
   </header>
 
+  <section class="bg-gray-800 py-8 text-center">
+    <p class="text-gray-400">🛡 Built with security in mind. Vulnerability reports welcome.</p>
+  </section>
+
   <section class="container mx-auto px-6 pb-16">
     <h2 class="text-3xl font-semibold mb-8">Our Projects</h2>
     <div class="grid md:grid-cols-3 gap-8">
@@ -34,6 +38,8 @@
         <p class="text-gray-400 mb-4">{{ project.description }}</p>
         {% if project.download %}
         <a href="/downloads/{{ project.file }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">Download</a>
+        {% else %}
+        <a href="{{ project.repo_url }}" target="_blank" class="inline-block bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded">View Repo</a>
         {% endif %}
       </div>
       {% endfor %}
@@ -42,7 +48,7 @@
 
   <footer class="bg-gray-800 py-6">
     <div class="container mx-auto text-center text-gray-400">
-      <p>&copy; 2025 The Solution Desk. <a href="https://github.com/TheSolutionDeskAndCompany" class="hover:underline">GitHub</a> | <a href="mailto:amber@thesolutiondesk.ca" class="hover:underline">amber@thesolutiondesk.ca</a> | <a href="mailto:security@thesolutiondesk.ca" class="hover:underline">security@thesolutiondesk.ca</a></p>
+      <p>&copy; 2025 The Solution Desk. <a href="https://github.com/TheSolutionDeskAndCompany" class="hover:underline">GitHub</a> | <a href="/.well-known/security.txt" class="hover:underline">Security Policy</a> | <a href="mailto:amber@thesolutiondesk.ca" class="hover:underline">amber@thesolutiondesk.ca</a></p>
     </div>
   </footer>
 </body>

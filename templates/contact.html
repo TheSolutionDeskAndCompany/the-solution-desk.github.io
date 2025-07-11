@@ -1,9 +1,65 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block title %}The Solution Desk — Contact{% endblock %}
+
+{% block content %}
+<section class="contact-hero">
+  <h1>Contact Us</h1>
+  <form action="https://formspree.io/f/yourFormID" method="POST" class="max-w-lg mx-auto bg-gray-800 p-8 rounded-lg">
+    <label class="block mb-4">
+      <span class="text-gray-300">Name</span>
+      <input type="text" name="name" required class="mt-1 block w-full p-2 bg-gray-700 rounded text-white" />
+    </label>
+    <label class="block mb-4">
+      <span class="text-gray-300">Email</span>
+      <input type="email" name="email" required class="mt-1 block w-full p-2 bg-gray-700 rounded text-white" />
+    </label>
+    <label class="block mb-4">
+      <span class="text-gray-300">Message</span>
+      <textarea name="message" rows="5" required class="mt-1 block w-full p-2 bg-gray-700 rounded text-white"></textarea>
+    </label>
+    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">Send Message</button>
+  </form>
+
+  <div class="max-w-lg mx-auto mt-6 text-center">
+    <p class="text-gray-400">Or email us at:</p>
+    <p class="text-gray-400"><a href="mailto:amber@thesolutiondesk.ca" class="hover:underline">amber@thesolutiondesk.ca</a> | <a href="mailto:info@thesolutiondesk.ca" class="hover:underline">info@thesolutiondesk.ca</a> | <a href="mailto:security@thesolutiondesk.ca" class="hover:underline">security@thesolutiondesk.ca</a></p>
+  </div>
+</section>
+{% endblock %}
 <html lang="en" class="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact - The Solution Desk</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Site Info -->
+  <title>The Solution Desk — Contact</title>
+  <meta name="description" content="Get in touch with The Solution Desk for AI-powered automation tools and support." />
+  <meta name="author" content="Amber Boudreau" />
+  <meta name="keywords" content="contact, The Solution Desk, developer tools, automation support" />
+  <link rel="canonical" href="https://www.thesolutiondesk.ca/contact" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}" />
+
+  <!-- OG for social sharing -->
+  <meta property="og:title" content="Contact — The Solution Desk" />
+  <meta property="og:description" content="Reach out to The Solution Desk for automation tool queries, demo requests, or security disclosures." />
+  <meta property="og:image" content="{{ url_for('static', filename='logo.png') }}" />
+  <meta property="og:url" content="https://www.thesolutiondesk.ca/contact" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Contact — The Solution Desk" />
+  <meta name="twitter:description" content="Reach out to The Solution Desk for automation tool queries, demo requests, or security disclosures." />
+  <meta name="twitter:image" content="{{ url_for('static', filename='logo.png') }}" />
+
+  <!-- Theme color -->
+  <meta name="theme-color" content="#0a0f1c" />
+
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-900 text-white font-sans">

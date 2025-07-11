@@ -1,70 +1,36 @@
-<!DOCTYPE html>
-<html lang="en" class="dark">
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+{% extends "base.html" %}
 
-  <!-- Site Info -->
-  <title>The Solution Desk — Tools</title>
-  <meta name="description" content="Explore our suite of developer-focused automation and CLI tools at The Solution Desk." />
-  <meta name="author" content="Amber Boudreau" />
-  <meta name="keywords" content="CLI tools, automation, developer tools, The Solution Desk" />
-  <link rel="canonical" href="https://www.thesolutiondesk.ca/tools" />
+{% block title %}The Solution Desk — Smart Tools for Small Business{% endblock %}
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}" />
+{% block content %}
+<section class="hero">
+  <h1>The Solution Desk</h1>
+  <h2>Smart tools for small business</h2>
+  <p>
+    AI-assisted automation, streamlined systems, and real-world results
+    for small businesses looking to optimize their operations.
+  </p>
+</section>
 
-  <!-- OG for social sharing -->
-  <meta property="og:title" content="The Solution Desk — Tools" />
-  <meta property="og:description" content="Explore our suite of developer-focused automation and CLI tools at The Solution Desk." />
-  <meta property="og:image" content="{{ url_for('static', filename='logo.png') }}" />
-  <meta property="og:url" content="https://www.thesolutiondesk.ca/tools" />
-  <meta property="og:type" content="website" />
-
-  <!-- Twitter cards -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="The Solution Desk — Tools" />
-  <meta name="twitter:description" content="Explore our suite of developer-focused automation and CLI tools at The Solution Desk." />
-  <meta name="twitter:image" content="{{ url_for('static', filename='logo.png') }}" />
-
-  <!-- Theme color -->
-  <meta name="theme-color" content="#0a0f1c" />
-
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-900 text-white font-sans">
-  <nav class="p-6 bg-gray-800">
-    <div class="container mx-auto flex justify-between">
-      <div class="flex items-center">
-        <img src="{{ url_for('static', filename='logo.png') }}" alt="The Solution Desk Logo" class="h-10 mr-3" />
-        <a href="/" class="text-2xl font-bold">The Solution Desk</a>
-      </div>
-      <div class="space-x-4">
-        <a href="/projects" class="hover:underline">Projects</a>
-        <a href="/tools" class="hover:underline">Tools</a>
-        <a href="/contact" class="hover:underline">Contact</a>
-      </div>
+<section class="tools">
+  <h3>Developer Tools</h3>
+  <div class="project-grid">
+    <div class="card">
+      <h4><a href="/projects/shelltasker">ShellTasker</a></h4>
+      <p>Custom shell automation via reusable CLI commands</p>
     </div>
-  </nav>
-
-  <section class="container mx-auto px-6 py-16">
-    <h1 class="text-4xl font-semibold mb-6">Our Tools</h1>
-    <div class="grid md:grid-cols-2 gap-8">
-      {% for tool in tools %}
-      <div class="bg-gray-800 p-6 rounded-lg">
-        <h3 class="text-xl font-semibold mb-2">{{ tool }}</h3>
-        <p class="text-gray-400">Description coming soon.</p>
-      </div>
-      {% endfor %}
+    <div class="card">
+      <h4><a href="/projects/quickdeploy-cli">QuickDeploy CLI</a></h4>
+      <p>Instant deploys to Vercel/Netlify from your terminal</p>
     </div>
-  </section>
-
-  <footer class="bg-gray-800 py-6">
-    <div class="container mx-auto text-center text-gray-400">
-      <p>&copy; 2025 The Solution Desk. <a href="https://github.com/TheSolutionDeskAndCompany" class="hover:underline">GitHub</a> | <a href="/.well-known/security.txt" class="hover:underline">Security Policy</a> | <a href="mailto:amber@thesolutiondesk.ca" class="hover:underline">amber@thesolutiondesk.ca</a></p>
+    <div class="card">
+      <h4>JobScript</h4>
+      <p>Batch job app execution for parallel job board submissions</p>
     </div>
-  </footer>
-</body>
-</html>
+    <div class="card">
+      <h4>CleanPath</h4>
+      <p>Filesystem hygiene utility for dev environments</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

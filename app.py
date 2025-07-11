@@ -5,44 +5,53 @@ import os
 app = Flask(__name__, static_folder='static', static_url_path='')
 
 # Project definitions
-projects = [
-    {
+projects = {
+    'autohired': {
         'name': 'AutoHired',
-        'slug': 'autohired',
-        'description': 'AI-powered resume + job application bot',
-        'download': False,
-        'repo_url': 'https://github.com/TheSolutionDeskAndCompany/AutoHired'
+        'tagline': 'AI-powered resume + job application bot',
+        'category': 'Automation Tool',
+        'tech_stack': 'Python, Flask, OpenAI API',
+        'description': 'Automatically generate and submit tailored job applications based on your resume and job listings.',
+        'download_link': '/downloads/autohired.zip',
+        'repo_link': 'https://github.com/TheSolutionDeskAndCompany/AutoHired'
     },
-    {
+    'organiserpro': {
         'name': 'OrganiserPro',
-        'slug': 'organiserpro',
-        'description': 'CLI-based file management tool',
-        'download': True,
-        'file': 'project.zip',
-        'repo_url': 'https://github.com/TheSolutionDeskAndCompany/OrganiserPro'
+        'tagline': 'CLI-based file management tool',
+        'category': 'CLI Utility',
+        'tech_stack': 'Python, argparse',
+        'description': 'Sort, clean, and deduplicate files across massive directories using the command line.',
+        'download_link': '/downloads/organiserpro.zip',
+        'repo_link': 'https://github.com/TheSolutionDeskAndCompany/OrganiserPro'
     },
-    {
+    'process-optimization-app': {
         'name': 'Process Optimization App',
-        'slug': 'process-optimization-app',
+        'tagline': 'Smart automation assistant for daily ops',
+        'category': 'Automation Assistant',
+        'tech_stack': 'Python, Flask',
         'description': 'Smart automation assistant for daily ops',
-        'download': False,
-        'repo_url': 'https://github.com/TheSolutionDeskAndCompany/Process-Optimization-App'
+        'download_link': None,
+        'repo_link': 'https://github.com/TheSolutionDeskAndCompany/Process-Optimization-App'
     },
-    {
+    'shelltasker': {
         'name': 'ShellTasker',
-        'slug': 'shelltasker',
+        'tagline': 'Custom script automation via reusable CLI commands',
+        'category': 'CLI Utility',
+        'tech_stack': 'Python',
         'description': 'Custom script automation via reusable CLI commands',
-        'download': False,
-        'repo_url': 'https://github.com/TheSolutionDeskAndCompany/ShellTasker'
+        'download_link': None,
+        'repo_link': 'https://github.com/TheSolutionDeskAndCompany/ShellTasker'
     },
-    {
+    'quickdeploy-cli': {
         'name': 'QuickDeploy CLI',
-        'slug': 'quickdeploy-cli',
+        'tagline': 'One-command full-stack deploy to Vercel/Netlify',
+        'category': 'CLI Utility',
+        'tech_stack': 'Node.js',
         'description': 'One-command full-stack deploy to Vercel/Netlify',
-        'download': False,
-        'repo_url': 'https://github.com/TheSolutionDeskAndCompany/QuickDeploy-CLI'
-    },
-]
+        'download_link': None,
+        'repo_link': 'https://github.com/TheSolutionDeskAndCompany/QuickDeploy-CLI'
+    }
+}
 
 @app.route('/')
 def index():
@@ -74,9 +83,9 @@ def security_txt():
 def slugify(name):
     return name.lower().replace(' ', '-')
 
-@app.route('/projects/<slug>')
-def project_detail(slug):
-    project = next((p for p in projects if p['slug'] == slug), None)
+@app.route('/projects/<project_id>')
+def project_detail(project_id):
+    project = projects.get(project_id)
     if not project:
         abort(404)
     return render_template('project_detail.html', project=project)

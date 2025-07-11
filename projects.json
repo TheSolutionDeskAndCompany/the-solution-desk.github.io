@@ -1,0 +1,38 @@
+{
+  "autohired": {
+    "name": "AutoHired",
+    "tagline": "AI-powered resume and job application bot",
+    "category": "Automation Tool",
+    "tech_stack": "Python, Flask, OpenAI API",
+    "description": "Automatically generate, personalize, and submit job applications using AI. Includes resume parsing and cover letter generation.",
+    "download_link": "/downloads/autohired.zip",
+    "repo_link": "https://github.com/TheSolutionDeskAndCompany/AutoHired"
+  },
+  "organiserpro": {
+    "name": "OrganiserPro",
+    "tagline": "CLI file deduplication and cleanup",
+    "category": "CLI Utility",
+    "tech_stack": "Python, argparse, os",
+    "description": "Organize, deduplicate, and clean large folders using blazing-fast CLI operations. Works across platforms.",
+    "download_link": "/downloads/organiserpro.zip",
+    "repo_link": "https://github.com/TheSolutionDeskAndCompany/OrganiserPro"
+  },
+  "shelltasker": {
+    "name": "ShellTasker",
+    "tagline": "Reusable shell command sequences",
+    "category": "Automation / DevOps",
+    "tech_stack": "Bash, Python, Makefile",
+    "description": "Build reusable task sequences with simple shell instructions for rapid dev setup, deployment, and maintenance.",
+    "download_link": "/downloads/shelltasker.zip",
+    "repo_link": "https://github.com/TheSolutionDeskAndCompany/ShellTasker"
+  },
+  "quickdeploy": {
+    "name": "QuickDeploy CLI",
+    "tagline": "One-command deploy to Netlify/Vercel",
+    "category": "Dev Tool",
+    "tech_stack": "Node.js, Shell",
+    "description": "Quickly deploy static or full-stack apps to hosting platforms using a unified CLI. Supports Vercel, Netlify, Render.",
+    "download_link": "/downloads/quickdeploy.zip",
+    "repo_link": "https://github.com/TheSolutionDeskAndCompany/QuickDeploy"
+  }
+}

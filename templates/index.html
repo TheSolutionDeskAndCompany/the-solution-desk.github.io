@@ -1,58 +1,41 @@
-<!DOCTYPE html>
-<html lang="en" class="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Solution Desk</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-900 text-white font-sans">
-  <nav class="p-6 bg-gray-800">
-    <div class="container mx-auto flex justify-between">
-      <div class="flex items-center">
-        <img src="{{ url_for('static', filename='logo.png') }}" alt="The Solution Desk Logo" class="h-10 mr-3" />
-        <a href="/" class="text-2xl font-bold">The Solution Desk</a>
-      </div>
-      <div class="space-x-4">
-        <a href="/projects" class="hover:underline">Projects</a>
-        <a href="/tools" class="hover:underline">Tools</a>
-        <a href="/contact" class="hover:underline">Contact</a>
-        <a href="/downloads/project.zip" class="hover:underline">Download</a>
-      </div>
+{% extends "base.html" %}
+
+{% block title %}The Solution Desk — Smart Tools for Small Business{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <h1>The Solution Desk</h1>
+  <h2>Smart tools for small business</h2>
+  <p>
+    AI-assisted automation, streamlined systems, and real-world results
+    for small businesses looking to optimize their operations.
+  </p>
+</section>
+
+<section class="projects">
+  <h3>Our Projects</h3>
+  <div class="project-grid">
+    <div class="card">
+      <h4>AutoHired</h4>
+      <p>AI-powered resume + job application bot</p>
     </div>
-  </nav>
-
-  <header class="text-center py-16">
-    <h1 class="text-5xl font-bold">The Solution Desk</h1>
-    <p class="mt-4 text-xl">Smart tools for small business</p>
-    <p class="mt-2 text-gray-400 max-w-xl mx-auto">AI-assisted automation, streamlined systems, and real-world results for small businesses looking to optimize their operations.</p>
-  </header>
-
-  <section class="bg-gray-800 py-8 text-center">
-    <p class="text-gray-400">🛡 Built with security in mind. Vulnerability reports welcome.</p>
-  </section>
-
-  <section class="container mx-auto px-6 pb-16">
-    <h2 class="text-3xl font-semibold mb-8">Our Projects</h2>
-    <div class="grid md:grid-cols-3 gap-8">
-      {% for project in projects %}
-      <div class="bg-gray-800 p-6 rounded-lg">
-        <h3 class="text-xl font-semibold mb-2"><a href="/projects/{{ project.slug }}" class="hover:underline">{{ project.name }}</a></h3>
-        <p class="text-gray-400 mb-4">{{ project.description }}</p>
-        {% if project.download %}
-        <a href="/downloads/{{ project.file }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">Download</a>
-        {% else %}
-        <a href="{{ project.repo_url }}" target="_blank" class="inline-block bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded">View Repo</a>
-        {% endif %}
-      </div>
-      {% endfor %}
+    <div class="card">
+      <h4>OrganiserPro</h4>
+      <p>CLI-based file management tool</p>
+      <a href="/downloads/organiserpro.zip" class="button">Download</a>
     </div>
-  </section>
-
-  <footer class="bg-gray-800 py-6">
-    <div class="container mx-auto text-center text-gray-400">
-      <p>&copy; 2025 The Solution Desk. <a href="https://github.com/TheSolutionDeskAndCompany" class="hover:underline">GitHub</a> | <a href="/.well-known/security.txt" class="hover:underline">Security Policy</a> | <a href="mailto:amber@thesolutiondesk.ca" class="hover:underline">amber@thesolutiondesk.ca</a></p>
+    <div class="card">
+      <h4>Process Optimization App</h4>
+      <p>Smart automation assistant for daily ops</p>
     </div>
-  </footer>
-</body>
-</html>
+    <div class="card">
+      <h4>ShellTasker</h4>
+      <p>Custom script automation via reusable CLI commands</p>
+    </div>
+    <div class="card">
+      <h4>QuickDeploy CLI</h4>
+      <p>One-command full-stack deploy to Vercel/Netlify</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,11 @@
+# Render service configuration
+# Ensure this is on the free tier
+
+services:
+  - type: web
+    name: thesolutiondesk
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app --bind 0.0.0.0:5000 --workers 3"
+    plan: free
+    region: oregon

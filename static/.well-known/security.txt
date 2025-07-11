@@ -1,0 +1,5 @@
+Contact: mailto:security@thesolutiondesk.ca
+Preferred-Languages: en
+Canonical: https://thesolutiondesk.ca/.well-known/security.txt
+Policy: https://github.com/TheSolutionDeskAndCompany/security-policy/blob/main/SECURITY.md
+Hiring: https://github.com/TheSolutionDeskAndCompany/careers

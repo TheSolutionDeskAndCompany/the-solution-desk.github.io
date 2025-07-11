@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - The Solution Desk</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+  <nav class="p-6 bg-gray-800">
+    <div class="container mx-auto flex justify-between">
+      <a href="/" class="text-2xl font-bold">The Solution Desk</a>
+      <div class="space-x-4">
+        <a href="/projects" class="hover:underline">Projects</a>
+        <a href="/tools" class="hover:underline">Tools</a>
+        <a href="/contact" class="hover:underline">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="container mx-auto px-6 py-16">
+    <h1 class="text-4xl font-semibold mb-6">Contact Us</h1>
+    <form action="https://formspree.io/f/yourFormID" method="POST" class="max-w-lg mx-auto bg-gray-800 p-8 rounded-lg">
+      <label class="block mb-4">
+        <span class="text-gray-300">Name</span>
+        <input type="text" name="name" required class="mt-1 block w-full p-2 bg-gray-700 rounded text-white" />
+      </label>
+      <label class="block mb-4">
+        <span class="text-gray-300">Email</span>
+        <input type="email" name="email" required class="mt-1 block w-full p-2 bg-gray-700 rounded text-white" />
+      </label>
+      <label class="block mb-4">
+        <span class="text-gray-300">Message</span>
+        <textarea name="message" rows="5" required class="mt-1 block w-full p-2 bg-gray-700 rounded text-white"></textarea>
+      </label>
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">Send Message</button>
+    </form>
+  </section>
+
+  <footer class="bg-gray-800 py-6">
+    <div class="container mx-auto text-center text-gray-400">
+      <p>&copy; 2025 The Solution Desk. <a href="https://github.com/TheSolutionDeskAndCompany" class="hover:underline">GitHub</a> | <a href="mailto:amber@thesolutiondesk.ca" class="hover:underline">amber@thesolutiondesk.ca</a> | <a href="mailto:security@thesolutiondesk.ca" class="hover:underline">security@thesolutiondesk.ca</a></p>
+    </div>
+  </footer>
+</body>
+</html>

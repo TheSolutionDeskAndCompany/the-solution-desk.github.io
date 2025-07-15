@@ -31,7 +31,11 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run --headless"
+    "cypress:run": "cypress run --headless",
+    "lhci:collect": "lhci collect",
+    "lhci:assert": "lhci assert",
+    "lhci:upload": "lhci upload",
+    "lhci:autorun": "lhci autorun"
   },
   "eslintConfig": {
     "extends": [
@@ -55,6 +59,7 @@
     "@babel/core": "^7.28.0",
     "@babel/preset-env": "^7.28.0",
     "@babel/preset-react": "^7.27.1",
+    "@lhci/cli": "^0.15.1",
     "@storybook/addon-docs": "^9.0.16",
     "@storybook/addon-onboarding": "^9.0.16",
     "@storybook/preset-create-react-app": "^9.0.16",

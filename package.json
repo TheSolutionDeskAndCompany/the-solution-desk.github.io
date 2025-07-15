@@ -1,0 +1,10 @@
+{
+  "name": "the-solution-desk",
+  "private": true,
+  "scripts": {
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "husky": "^8.0.0"
+  }
+}

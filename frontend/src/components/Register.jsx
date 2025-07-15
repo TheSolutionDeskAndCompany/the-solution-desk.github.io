@@ -1,11 +1,11 @@
-import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import './Auth.css';
+import React from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "./Auth.css";
 
 export default function Register() {
   const { register } = useContext(AuthContext);
@@ -19,15 +19,15 @@ export default function Register() {
 
   return (
     <Formik
-      initialValues={{ name: '', email: '', password: '' }}
+      initialValues={{ name: "", email: "", password: "" }}
       validationSchema={schema}
       onSubmit={async (values, { setSubmitting }) => {
         try {
           await register(values);
-          toast.success('Registered!');
-          navigate('/');
+          toast.success("Registered!");
+          navigate("/");
         } catch {
-          toast.error('Registration failed');
+          toast.error("Registration failed");
         } finally {
           setSubmitting(false);
         }
@@ -43,7 +43,7 @@ export default function Register() {
           <Field type="password" name="password" placeholder="Password" />
           <ErrorMessage name="password" component="div" className="error" />
           <button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Registering…' : 'Register'}
+            {isSubmitting ? "Registering…" : "Register"}
           </button>
         </Form>
       )}

@@ -4,7 +4,8 @@
   justify-content: space-between;
   padding: 1rem;
 }
-.nav-links a, .nav-logout {
+.nav-links a,
+.nav-logout {
   margin-left: 1rem;
   color: #66fcf1;
   text-decoration: none;
@@ -13,7 +14,7 @@
   cursor: pointer;
 }
 .nav-logo {
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
   font-size: 1.5rem;
   color: #45a29e;
 }

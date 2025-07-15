@@ -1,11 +1,11 @@
-import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import './Auth.css';
+import React from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "./Auth.css";
 
 export default function Login() {
   const { login } = useContext(AuthContext);
@@ -18,15 +18,15 @@ export default function Login() {
 
   return (
     <Formik
-      initialValues={{ email: '', password: '' }}
+      initialValues={{ email: "", password: "" }}
       validationSchema={schema}
       onSubmit={async (values, { setSubmitting }) => {
         try {
           await login(values);
-          toast.success('Logged in!');
-          navigate('/');
+          toast.success("Logged in!");
+          navigate("/");
         } catch (e) {
-          toast.error('Login failed');
+          toast.error("Login failed");
         } finally {
           setSubmitting(false);
         }
@@ -40,7 +40,7 @@ export default function Login() {
           <Field type="password" name="password" placeholder="Password" />
           <ErrorMessage name="password" component="div" className="error" />
           <button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Logging in…' : 'Login'}
+            {isSubmitting ? "Logging in…" : "Login"}
           </button>
         </Form>
       )}

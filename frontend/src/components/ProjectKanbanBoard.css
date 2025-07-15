@@ -115,7 +115,7 @@
   .kanban-board {
     flex-direction: column;
   }
-  
+
   .kanban-column-wrapper {
     width: 100%;
     margin-bottom: 1.5rem;

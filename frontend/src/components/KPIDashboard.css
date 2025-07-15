@@ -106,22 +106,22 @@ h3 {
     padding: 1rem;
     margin: 1rem;
   }
-  
+
   .chart-row {
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .view-selector {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .view-button {
     width: 100%;
     max-width: 250px;
   }
-  
+
   h1 {
     font-size: 1.8rem;
   }

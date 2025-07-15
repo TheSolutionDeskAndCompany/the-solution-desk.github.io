@@ -5,9 +5,9 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { AuthProvider } from './context/AuthContext';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { AuthProvider } from "./context/AuthContext";
 
 // Initialize Sentry
 Sentry.init({

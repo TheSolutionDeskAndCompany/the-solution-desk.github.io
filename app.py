@@ -135,6 +135,10 @@ def init_admin(app):
 # Create app instance using environment variable or default to development
 app = create_app(os.getenv('FLASK_ENV') or 'development')
 
+# Register CLI commands
+from commands import register_commands
+register_commands(app)
+
 # Initialize admin after app is created
 with app.app_context():
     init_admin(app)

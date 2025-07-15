@@ -1,6 +1,6 @@
 -- Generated SQL for database seeding
 -- Mode: reset
--- Generated at: 2025-07-15T06:19:46.404700
+-- Generated at: 2025-07-15T06:45:41.025913
 
 BEGIN TRANSACTION;
 
@@ -73,16 +73,41 @@ BEGIN TRANSACTION;
 
 
 -- Seed users
-INSERT INTO users (email, password_hash, role) 
-VALUES ('admin@solutiondesk.com', 'sha256$cb7746d15ef4ed1a$1fjRCRAdkFoljtcpGgYJfLnbbt9diIN98V6JT5Tbf8Q=', 'Admin');
-INSERT INTO users (email, password_hash, role) 
-VALUES ('contributor@solutiondesk.com', 'sha256$60d22ced21ae28e2$Em6lySJRN9K9ad567F1Ls+KcAz1CrPhuxZN2lmilclA=', 'Contributor');
-INSERT INTO users (email, password_hash, role) 
-VALUES ('viewer@solutiondesk.com', 'sha256$aa234eb65d922a7b$+K7iNEvXNO3CYsgnTbHrlNcVCVvoINOewUyAdldHNg0=', 'Viewer');
-INSERT INTO users (email, password_hash, role) 
-VALUES ('test@example.com', 'sha256$be7a8b8a097c90a9$6ko389ijAhftnVfG0du7PGQMh44oKBtMAqpdRZdtwys=', 'Viewer');
-INSERT INTO users (email, password_hash, role) 
-VALUES ('longemailtestingthemaximumlengthpossibleforemailaddress@verylongdomainnamethatmightcauseuiissues.co.uk', 'sha256$e19586d19a2eaea3$4oxuoPHfPZWxULcQ7LVV5dnAeXz38kepIvjkRoZFdlg=', 'Viewer');
+INSERT INTO users 
+(email, password_hash, role) 
+VALUES (
+'admin@solutiondesk.com', 
+'sha256$99ef9943ade34284$zx0dvAyRZF27znmy/5IYnTygVYORmd351zUSaoyMk3E=', 
+'Admin'
+);
+INSERT INTO users 
+(email, password_hash, role) 
+VALUES (
+'contributor@solutiondesk.com', 
+'sha256$e2b4af37a176f85a$SEtEO3+lfYbgQIdA4ztkBsNQAPBgjDhlkMPWua/W7WE=', 
+'Contributor'
+);
+INSERT INTO users 
+(email, password_hash, role) 
+VALUES (
+'viewer@solutiondesk.com', 
+'sha256$ea1de6dd25b24227$A1XL7J5HDKsQWGSHWS1d+crfc5rHgxInEU1c4moPOwk=', 
+'Viewer'
+);
+INSERT INTO users 
+(email, password_hash, role) 
+VALUES (
+'test@example.com', 
+'sha256$32926453bcbf3307$vIX7YSCIXqD35XewU3/WBLF2PFZ87P6TGuSVckXYHYU=', 
+'Viewer'
+);
+INSERT INTO users 
+(email, password_hash, role) 
+VALUES (
+'longemailtestingthemaximumlengthpossibleforemailaddress@verylongdomainnamethatmightcauseuiissues.co.uk', 
+'sha256$43de01f0780a94fc$GXMyjcjEsQC8nd575dLFPwj2rt1h+VSk0u6WbZQzjjo=', 
+'Viewer'
+);
 
 -- Seed projects
 INSERT INTO projects 
@@ -131,7 +156,7 @@ INSERT INTO projects
 (title, slug, description, long_description, image_url, 
 demo_url, github_url, download_url, is_featured) 
 VALUES (
-'This is an extremely long project title that might cause UI issues in some views and should be handled gracefully by any frontend implementation without breaking layouts', 
+'This is an extremely long project title that might cause UI issues in some views and should be handl', 
 'very-long-title-project', 
 'Testing extremely long titles', 
 'This project exists solely to test how the UI handles extremely long titles and descriptions. It''s important that our application can handle edge cases like this gracefully without breaking layouts or truncating text inappropriately.', 
@@ -147,7 +172,7 @@ demo_url, github_url, download_url, is_featured)
 VALUES (
 'Empty Project', 
 'empty-project', 
-NULL, 
+'Description for Empty Project', 
 NULL, 
 NULL, 
 NULL, 
@@ -172,6 +197,22 @@ VALUES (
 'Develop a mobile application version of our platform for iOS and Android devices with offline capabilities.', 
 'in_progress', 
 5
+);
+INSERT INTO ideas 
+(title, description, status, priority) 
+VALUES (
+'This is an extremely long idea title that exceeds normal length and will test the handling of excess', 
+'A normal description for an idea with an extremely long title.', 
+'new', 
+2
+);
+INSERT INTO ideas 
+(title, description, status, priority) 
+VALUES (
+'Idea with Missing Status', 
+'This idea has a missing status field which should be handled by defaulting to ''new''', 
+'new', 
+3
 );
 INSERT INTO ideas 
 (title, description, status, priority) 
@@ -292,10 +333,49 @@ category, start_date, end_date)
 VALUES (
 'Monthly Active Users', 
 'Number of unique users who engage with the platform each month', 
-10000, 
-7500, 
+10000.0, 
+7500.0, 
 'users', 
 'Engagement', 
+'2025-01-01T00:00:00', 
+'2025-12-31T23:59:59'
+);
+INSERT INTO kpis 
+(title, description, target_value, current_value, unit, 
+category, start_date, end_date) 
+VALUES (
+'KPI with Very Old Start Date', 
+'This KPI has a start date from many years ago to test date handling', 
+100.0, 
+80.0, 
+'points', 
+'Testing', 
+'2010-01-01T00:00:00', 
+'2030-12-31T23:59:59'
+);
+INSERT INTO kpis 
+(title, description, target_value, current_value, unit, 
+category, start_date, end_date) 
+VALUES (
+'KPI with Missing Dates', 
+'This KPI is missing date fields which should be handled gracefully', 
+50.0, 
+25.0, 
+'%', 
+'Testing', 
+'2025-07-15T06:45:41.025833', 
+'2025-12-31T23:59:59'
+);
+INSERT INTO kpis 
+(title, description, target_value, current_value, unit, 
+category, start_date, end_date) 
+VALUES (
+'KPI with Special Characters: #$%^&*()!@', 
+'Testing how special characters are handled in titles and descriptions', 
+100.0, 
+50.0, 
+'units', 
+'Testing &lt;script&gt;alert(''XSS Test'')&lt;/script&gt;', 
 '2025-01-01T00:00:00', 
 '2025-12-31T23:59:59'
 );
@@ -331,8 +411,8 @@ category, start_date, end_date)
 VALUES (
 'Bug Resolution Time', 
 'Average time to resolve reported bugs', 
-48, 
-72, 
+48.0, 
+72.0, 
 'hours', 
 'Development', 
 '2025-01-01T00:00:00', 

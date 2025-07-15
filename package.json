@@ -2,7 +2,10 @@
   "name": "the-solution-desk",
   "private": true,
   "scripts": {
-    "prepare": "husky"
+    "prepare": "husky",
+    "seed": "python scripts/seed.py",
+    "seed:reset": "python scripts/seed.py --mode=reset",
+    "seed:inc": "python scripts/seed.py --mode=incremental"
   },
   "devDependencies": {
     "husky": "^8.0.0"

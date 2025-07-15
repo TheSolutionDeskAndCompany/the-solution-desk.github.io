@@ -1,0 +1,232 @@
+{
+  "users": [
+    {
+      "email": "admin@solutiondesk.com",
+      "password": "securePassword123!",
+      "role": "Admin"
+    },
+    {
+      "email": "contributor@solutiondesk.com",
+      "password": "contributorPass456",
+      "role": "Contributor"
+    },
+    {
+      "email": "viewer@solutiondesk.com",
+      "password": "viewerOnly789",
+      "role": "Viewer"
+    },
+    {
+      "email": "test@example.com",
+      "password": "simplepass",
+      "role": "Viewer"
+    },
+    {
+      "email": "longemailtestingthemaximumlengthpossibleforemailaddress@verylongdomainnamethatmightcauseuiissues.co.uk",
+      "password": "password",
+      "role": "Viewer"
+    }
+  ],
+  
+  "projects": [
+    {
+      "title": "Portfolio Website",
+      "slug": "portfolio-website",
+      "description": "A responsive portfolio website showcasing projects and skills",
+      "long_description": "A comprehensive portfolio website built using React and Flask, featuring dynamic content loading, responsive design, and a contact form that integrates with email services. The site is optimized for performance and SEO.",
+      "image_url": "/static/images/projects/portfolio.jpg",
+      "demo_url": "https://portfolio.solutiondesk.com",
+      "github_url": "https://github.com/solutiondesk/portfolio",
+      "download_url": null,
+      "is_featured": true
+    },
+    {
+      "title": "Task Management System",
+      "slug": "task-management",
+      "description": "A Kanban-style task management application",
+      "long_description": "A comprehensive task management system with drag-and-drop functionality, task priorities, deadlines, and team collaboration features. Built with React for the frontend and Flask for the backend API.",
+      "image_url": "/static/images/projects/task-manager.jpg",
+      "demo_url": "https://tasks.solutiondesk.com",
+      "github_url": "https://github.com/solutiondesk/task-manager",
+      "download_url": "/downloads/task-manager-v1.0.zip",
+      "is_featured": true
+    },
+    {
+      "title": "E-commerce Platform",
+      "slug": "ecommerce-platform",
+      "description": "A full-featured e-commerce solution",
+      "long_description": "An end-to-end e-commerce platform with product catalog, shopping cart, payment processing, and order management. Integrates with various payment gateways and shipping services.",
+      "image_url": "/static/images/projects/ecommerce.jpg",
+      "demo_url": "https://shop.solutiondesk.com",
+      "github_url": "https://github.com/solutiondesk/ecommerce",
+      "download_url": null,
+      "is_featured": false
+    },
+    {
+      "title": "This is an extremely long project title that might cause UI issues in some views and should be handled gracefully by any frontend implementation without breaking layouts",
+      "slug": "very-long-title-project",
+      "description": "Testing extremely long titles",
+      "long_description": "This project exists solely to test how the UI handles extremely long titles and descriptions. It's important that our application can handle edge cases like this gracefully without breaking layouts or truncating text inappropriately.",
+      "image_url": null,
+      "demo_url": null,
+      "github_url": null,
+      "download_url": null,
+      "is_featured": false
+    },
+    {
+      "title": "Empty Project",
+      "slug": "empty-project",
+      "description": null,
+      "long_description": null,
+      "image_url": null,
+      "demo_url": null,
+      "github_url": null,
+      "download_url": null,
+      "is_featured": false
+    }
+  ],
+  
+  "ideas": [
+    {
+      "title": "AI-powered Content Recommender",
+      "description": "Create a content recommendation system using machine learning algorithms to suggest personalized content based on user behavior and preferences.",
+      "status": "new",
+      "priority": 3
+    },
+    {
+      "title": "Mobile App Version",
+      "description": "Develop a mobile application version of our platform for iOS and Android devices with offline capabilities.",
+      "status": "in_progress",
+      "priority": 5
+    },
+    {
+      "title": "This is an extremely long idea title that exceeds normal length and will test the handling of excessive text in the database and UI. It continues with more words to make it really long and potentially problematic for display in various UI components such as tables, cards, and navigation menus where space might be limited. This should be properly truncated or handled as appropriate by the application.",
+      "description": "A normal description for an idea with an extremely long title.",
+      "status": "new",
+      "priority": 2
+    },
+    {
+      "title": "Idea with Missing Status",
+      "description": "This idea has a missing status field which should be handled by defaulting to 'new'",
+      "priority": 3
+    },
+    {
+      "title": "Interactive Dashboard",
+      "description": "Build an interactive analytics dashboard with real-time data visualization and filtering capabilities.",
+      "status": "completed",
+      "priority": 2
+    },
+    {
+      "title": "Social Media Integration",
+      "description": "Add social media integration to allow users to share content directly from our platform to various social networks.",
+      "status": "new",
+      "priority": 1
+    },
+    {
+      "title": "Dark Mode Theme",
+      "description": "Implement a dark mode theme option for better user experience in low-light environments and to reduce eye strain.",
+      "status": "in_progress",
+      "priority": 4
+    },
+    {
+      "title": "Legacy Feature Migration",
+      "description": null,
+      "status": "archived",
+      "priority": 0
+    }
+  ],
+  
+  "sops": [
+    {
+      "title": "New Client Onboarding",
+      "description": "Standard procedure for onboarding new clients to our platform",
+      "content": "# New Client Onboarding Procedure\n\n## Step 1: Initial Consultation\n- Schedule a 30-minute call to understand client needs\n- Document requirements and expectations\n\n## Step 2: Account Setup\n- Create client account in the system\n- Send welcome email with login credentials\n\n## Step 3: Training Session\n- Schedule a 1-hour training session\n- Cover basic platform features and use cases\n\n## Step 4: Follow-up\n- Check in after 7 days to address any questions\n- Request feedback on onboarding experience",
+      "version": "1.2",
+      "category": "Customer Service"
+    },
+    {
+      "title": "Software Deployment Process",
+      "description": "Step-by-step procedure for deploying new code to production",
+      "content": "# Software Deployment Process\n\n## Pre-Deployment\n1. Complete all code reviews\n2. Run automated test suite\n3. Verify staging environment deployment\n\n## Deployment\n1. Create deployment branch\n2. Deploy to production server\n3. Run smoke tests\n\n## Post-Deployment\n1. Monitor application performance\n2. Check error logs\n3. Update documentation",
+      "version": "2.0",
+      "category": "Development"
+    },
+    {
+      "title": "Emergency Response Protocol",
+      "description": "Protocol for handling critical system outages and emergencies",
+      "content": "# Emergency Response Protocol\n\n## Detection\n- Automated monitoring alerts\n- Customer reported issues\n\n## Assessment\n- Determine severity level (1-4)\n- Identify affected systems\n\n## Response\n- Level 1: Immediate all-hands response\n- Level 2: Team lead coordinates response\n- Level 3: On-call engineer handles\n- Level 4: Scheduled fix\n\n## Communication\n- Update status page\n- Send customer notifications\n- Internal incident report",
+      "version": "1.5",
+      "category": "Operations"
+    }
+  ],
+  
+  "kpis": [
+    {
+      "title": "Monthly Active Users",
+      "description": "Number of unique users who engage with the platform each month",
+      "target_value": 10000,
+      "current_value": 7500,
+      "unit": "users",
+      "category": "Engagement",
+      "start_date": "2025-01-01T00:00:00",
+      "end_date": "2025-12-31T23:59:59"
+    },
+    {
+      "title": "KPI with Very Old Start Date",
+      "description": "This KPI has a start date from many years ago to test date handling",
+      "target_value": 100,
+      "current_value": 80,
+      "unit": "points",
+      "category": "Testing",
+      "start_date": "2000-01-01T00:00:00",
+      "end_date": "2030-12-31T23:59:59"
+    },
+    {
+      "title": "KPI with Missing Dates",
+      "description": "This KPI is missing date fields which should be handled gracefully",
+      "target_value": 50,
+      "current_value": 25,
+      "unit": "%",
+      "category": "Testing"
+    },
+    {
+      "title": "KPI with Special Characters: #$%^&*()!@",
+      "description": "Testing how special characters are handled in titles and descriptions",
+      "target_value": 100,
+      "current_value": 50,
+      "unit": "units",
+      "category": "Testing <script>alert('XSS Test')</script>",
+      "start_date": "2025-01-01T00:00:00",
+      "end_date": "2025-12-31T23:59:59"
+    },
+    {
+      "title": "Customer Satisfaction",
+      "description": "Average satisfaction score from customer feedback surveys",
+      "target_value": 4.8,
+      "current_value": 4.5,
+      "unit": "stars",
+      "category": "Customer Service",
+      "start_date": "2025-01-01T00:00:00",
+      "end_date": "2025-12-31T23:59:59"
+    },
+    {
+      "title": "Conversion Rate",
+      "description": "Percentage of visitors who complete a desired action",
+      "target_value": 5.0,
+      "current_value": 3.2,
+      "unit": "%",
+      "category": "Sales",
+      "start_date": "2025-01-01T00:00:00",
+      "end_date": "2025-12-31T23:59:59"
+    },
+    {
+      "title": "Bug Resolution Time",
+      "description": "Average time to resolve reported bugs",
+      "target_value": 48,
+      "current_value": 72,
+      "unit": "hours",
+      "category": "Development",
+      "start_date": "2025-01-01T00:00:00",
+      "end_date": "2025-12-31T23:59:59"
+    }
+  ]
+}

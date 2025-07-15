@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, send_from_directory, current_app
+from flask import Blueprint, render_template, send_from_directory, current_app, jsonify
 import os
 
 # Create main blueprint
@@ -36,3 +36,11 @@ def security_txt():
         'security.txt',
         mimetype='text/plain'
     )
+
+@main.route('/health')
+def health():
+    """Health check endpoint for API status"""
+    return jsonify({
+        'status': 'ok',
+        'message': 'API is running'
+    })

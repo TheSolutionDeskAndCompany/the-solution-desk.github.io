@@ -1,26 +1,29 @@
-# Python
+# Byte-compiled Python
 __pycache__/
 *.py[cod]
-*$py.class
 *.so
-.Python
+
+# Environment / virtualenv
 venv/
-.venv/
-ENV/
 env/
 .env
 .env.*
 
-# Version control
-.git
+# Git
+.git/
 .gitignore
 
-# IDE files
-.idea/
-.vscode/
-*.swp
-*.swo
+# Flask instance folder
+instance/
 
-# Temporary files
+# SQLite database
+*.sqlite3
+*.db
+
+# Logs
 *.log
-.pytest_cache/
+
+# Editor / OS files
+.DS_Store
+Thumbs.db
+*.swp

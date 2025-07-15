@@ -12,6 +12,7 @@ import NavBar from "./components/NavBar";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Footer from "./components/Footer";
 
 // Temporarily commenting out problematic imports for testing environment variables
 // import { Formik } from 'formik';
@@ -42,42 +43,45 @@ function App() {
     <Router>
       <div className="App">
         <NavBar />
-        <Routes>
-          <Route path="/" element={
-            <div className="welcome-container">
-              <h1>Welcome to The Solution Desk</h1>
-            </div>
-          } />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          
-          {/* Protected Routes */}
-          <Route path="/ideas/new" element={
-            <ProtectedRoute>
-              <IdeaForm />
-            </ProtectedRoute>
-          } />
-          <Route path="/kanban" element={
-            <ProtectedRoute>
-              <ProjectKanbanBoard />
-            </ProtectedRoute>
-          } />
-          <Route path="/sop" element={
-            <ProtectedRoute>
-              <SOPViewerUploader />
-            </ProtectedRoute>
-          } />
-          <Route path="/kpi" element={
-            <ProtectedRoute>
-              <KPIDashboard />
-            </ProtectedRoute>
-          } />
-          <Route path="/entities/:id/comments" element={
-            <ProtectedRoute>
-              <CommentsThreadWrapper />
-            </ProtectedRoute>
-          } />
-        </Routes>
+        <main className="main-content">
+          <Routes>
+            <Route path="/" element={
+              <div className="welcome-container">
+                <h1>Welcome to The Solution Desk</h1>
+              </div>
+            } />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            
+            {/* Protected Routes */}
+            <Route path="/ideas/new" element={
+              <ProtectedRoute>
+                <IdeaForm />
+              </ProtectedRoute>
+            } />
+            <Route path="/kanban" element={
+              <ProtectedRoute>
+                <ProjectKanbanBoard />
+              </ProtectedRoute>
+            } />
+            <Route path="/sop" element={
+              <ProtectedRoute>
+                <SOPViewerUploader />
+              </ProtectedRoute>
+            } />
+            <Route path="/kpi" element={
+              <ProtectedRoute>
+                <KPIDashboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/entities/:id/comments" element={
+              <ProtectedRoute>
+                <CommentsThreadWrapper />
+              </ProtectedRoute>
+            } />
+          </Routes>
+        </main>
+        <Footer />
       </div>
     </Router>
   );

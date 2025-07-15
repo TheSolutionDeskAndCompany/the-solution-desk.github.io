@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -37,6 +40,11 @@
   display: flex;
   align-items: center;
   margin-left: auto;
+}
+
+.main-content {
+  flex: 1;
+  padding: 1rem;
 }
 
 .App-link {

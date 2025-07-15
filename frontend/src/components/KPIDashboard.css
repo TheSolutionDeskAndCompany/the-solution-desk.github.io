@@ -1,0 +1,128 @@
+.kpi-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 8px;
+  color: #c5c6c7;
+}
+
+.kpi-description {
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  color: #9b9c9e;
+}
+
+h1 {
+  color: #66fcf1;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  text-shadow: 0 0 10px rgba(102, 252, 241, 0.5);
+}
+
+h3 {
+  color: #66fcf1;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid #45a29e;
+  padding-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.chart-container {
+  background-color: rgba(31, 40, 51, 0.7);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  border: 1px solid #45a29e;
+  box-shadow: 0 0 15px rgba(102, 252, 241, 0.1);
+}
+
+.chart-description {
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  color: #9b9c9e;
+  font-style: italic;
+}
+
+.view-selector {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.view-button {
+  background-color: #1f2833;
+  color: #c5c6c7;
+  border: 1px solid #45a29e;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.view-button:hover {
+  background-color: rgba(69, 162, 158, 0.2);
+  transform: translateY(-2px);
+}
+
+.view-button.active {
+  background-color: #45a29e;
+  color: #0b0c10;
+  box-shadow: 0 0 10px rgba(102, 252, 241, 0.3);
+}
+
+.dashboard-content {
+  min-height: 500px;
+}
+
+.recharts-default-tooltip {
+  background-color: #0b0c10 !important;
+  border-color: #45a29e !important;
+  color: #c5c6c7 !important;
+}
+
+.chart-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.chart-half {
+  flex: 1;
+  min-width: 300px;
+}
+
+/* Data point styling */
+.recharts-dot {
+  filter: drop-shadow(0 0 3px rgba(102, 252, 241, 0.5));
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .kpi-container {
+    padding: 1rem;
+    margin: 1rem;
+  }
+  
+  .chart-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .view-selector {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .view-button {
+    width: 100%;
+    max-width: 250px;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+  }
+}

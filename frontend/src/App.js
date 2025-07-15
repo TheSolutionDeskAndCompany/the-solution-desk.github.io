@@ -4,6 +4,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import logo from "./logo.svg";
 import "./App.css";
 import IdeaForm from "./components/IdeaForm";
+import ProjectKanbanBoard from "./components/ProjectKanbanBoard";
+import SOPViewerUploader from "./components/SOPViewerUploader";
+import KPIDashboard from "./components/KPIDashboard";
 
 // Temporarily commenting out problematic imports for testing environment variables
 // import { Formik } from 'formik';
@@ -40,10 +43,18 @@ function App() {
           <Route path="/" element={
             <div>
               <h1>Welcome to The Solution Desk</h1>
-              <a href="/ideas/new" className="cyberpunk-link">Submit a New Idea</a>
+              <div className="nav-links">
+                <a href="/ideas/new" className="cyberpunk-link">Submit a New Idea</a>
+                <a href="/kanban" className="cyberpunk-link">Project Kanban Board</a>
+                <a href="/sop" className="cyberpunk-link">SOP Documents</a>
+                <a href="/kpi" className="cyberpunk-link">KPI Dashboard</a>
+              </div>
             </div>
           } />
           <Route path="/ideas/new" element={<IdeaForm />} />
+          <Route path="/kanban" element={<ProjectKanbanBoard />} />
+          <Route path="/sop" element={<SOPViewerUploader />} />
+          <Route path="/kpi" element={<KPIDashboard />} />
         </Routes>
       </div>
     </Router>

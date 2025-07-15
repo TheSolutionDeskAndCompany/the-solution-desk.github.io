@@ -31,7 +31,7 @@
 
 .cyberpunk-link {
   display: inline-block;
-  margin: 2rem;
+  margin: 1rem;
   padding: 1rem 2rem;
   background: #0f0f1a;
   color: #66fcf1;
@@ -48,6 +48,7 @@
   background: #66fcf1;
   color: #0b0c10;
   transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(102, 252, 241, 0.3);
   box-shadow: 0 0 15px rgba(102, 252, 241, 0.5);
 }
 
@@ -55,6 +56,22 @@ body {
   background-color: #1f1f2a;
   color: #c5c6c7;
   font-family: sans-serif;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 600px) {
+  .cyberpunk-link {
+    margin: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+  }
 }
 
 @keyframes App-logo-spin {

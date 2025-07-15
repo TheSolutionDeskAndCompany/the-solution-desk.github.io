@@ -64,6 +64,7 @@ def create_app(config_name=None):
     from routes.tools import tools_bp
     from errors import errors as errors_bp
     from routes.api.docs import api_docs_bp
+    from routes.health import health_bp
     
     app.register_blueprint(main_bp)
     app.register_blueprint(auth_bp, url_prefix='/auth')
@@ -71,6 +72,7 @@ def create_app(config_name=None):
     app.register_blueprint(tools_bp, url_prefix='/tools')
     app.register_blueprint(errors_bp)
     app.register_blueprint(api_docs_bp, url_prefix='/api')
+    app.register_blueprint(health_bp)
     
     # Initialize Marshmallow
     from schemas import init_ma

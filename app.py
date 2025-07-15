@@ -1,4 +1,6 @@
 import os
+import logging
+from logging.handlers import RotatingFileHandler
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -28,6 +30,16 @@ def create_app(config_name=None):
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
     
+    # Configure logging
+    handler = RotatingFileHandler(app.config['LOG_FILE'], maxBytes=100000, backupCount=5)
+    handler.setLevel(getattr(logging, app.config['LOG_LEVEL']))
+    handler.setFormatter(logging.Formatter(
+        '%(asctime)s %(levelname)s in %(module)s: %(message)s'
+    ))
+    app.logger.addHandler(handler)
+    app.logger.setLevel(getattr(logging, app.config['LOG_LEVEL']))
+    app.logger.info('Application startup')
+    
     # Load instance config (overrides default config)
     app.config.from_pyfile('config.py', silent=True)
     
@@ -46,14 +58,20 @@ def create_app(config_name=None):
     
     # Register blueprints with URL prefixes
     from routes.main import main as main_bp
+    from routes.auth import auth_bp
     from routes.projects import projects_bp
     from routes.tools import tools_bp
-    from routes.auth import auth_bp
+    from errors import errors as errors_bp
     
     app.register_blueprint(main_bp)
+    app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(projects_bp, url_prefix='/projects')
     app.register_blueprint(tools_bp, url_prefix='/tools')
-    app.register_blueprint(auth_bp, url_prefix='/auth')
+    app.register_blueprint(errors_bp)
+    
+    # Initialize Marshmallow
+    from schemas import init_ma
+    init_ma(app)
     
     # Initialize Flask-RESTful API
     api.init_app(app)
@@ -96,7 +114,7 @@ def init_admin(app):
     
     class SecureModelView(ModelView):
         def is_accessible(self):
-            return current_user.is_authenticated and current_user.is_admin
+            return current_user.is_authenticated and current_user.role == 'Admin'
         
         def inaccessible_callback(self, name, **kwargs):
             return redirect(url_for('auth.login'))

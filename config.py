@@ -16,6 +16,10 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', f'sqlite:///{os.path.join(basedir, "app.db")}')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
+    # Logging
+    LOG_FILE = os.getenv('LOG_FILE', 'app.log')
+    LOG_LEVEL = os.getenv('LOG_LEVEL', 'INFO')
+    
     # Session
     PERMANENT_SESSION_LIFETIME = timedelta(days=30)
     

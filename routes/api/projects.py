@@ -1,18 +1,9 @@
-from flask_restful import Resource, reqparse
-from flask import jsonify
+from flask_restful import Resource
+from flask import jsonify, request, current_app
+from marshmallow import ValidationError
 from models.project import Project
+from schemas.project import ProjectSchema
 from app import db
-
-parser = reqparse.RequestParser()
-parser.add_argument('title', type=str, required=True, help='Title is required')
-parser.add_argument('slug', type=str, required=True, help='Slug is required')
-parser.add_argument('description', type=str)
-parser.add_argument('long_description', type=str)
-parser.add_argument('image_url', type=str)
-parser.add_argument('demo_url', type=str)
-parser.add_argument('github_url', type=str)
-parser.add_argument('download_url', type=str)
-parser.add_argument('is_featured', type=bool)
 
 class ProjectsAPI(Resource):
     def get(self, id=None):
@@ -25,43 +16,68 @@ class ProjectsAPI(Resource):
 
     def post(self):
         """Create a new project"""
-        args = parser.parse_args()
-        proj = Project(
-            title=args['title'],
-            slug=args['slug'],
-            description=args.get('description'),
-            long_description=args.get('long_description'),
-            image_url=args.get('image_url'),
-            demo_url=args.get('demo_url'),
-            github_url=args.get('github_url'),
-            download_url=args.get('download_url'),
-            is_featured=args.get('is_featured', False)
-        )
-        db.session.add(proj)
-        db.session.commit()
-        return jsonify(proj.serialize()), 201
+        try:
+            # Load data through schema with validation
+            schema = ProjectSchema()
+            schema.context = {'create_mode': True}
+            proj = schema.load(request.get_json())
+            
+            # Add and commit to database
+            db.session.add(proj)
+            db.session.commit()
+            
+            # Log successful creation
+            current_app.logger.info(f"Project created: {proj.title}")
+            
+            return jsonify(schema.dump(proj)), 201
+            
+        except ValidationError as err:
+            current_app.logger.warning(f"Project creation validation error: {err.messages}")
+            return {"errors": err.messages}, 400
+        except Exception as e:
+            current_app.logger.error(f"Error creating project: {str(e)}")
+            db.session.rollback()
+            return {"error": "An error occurred while creating the project"}, 500
 
     def put(self, id):
         """Update an existing project"""
-        proj = Project.query.get_or_404(id)
-        args = parser.parse_args()
-        
-        proj.title = args['title']
-        proj.slug = args['slug']
-        proj.description = args.get('description', proj.description)
-        proj.long_description = args.get('long_description', proj.long_description)
-        proj.image_url = args.get('image_url', proj.image_url)
-        proj.demo_url = args.get('demo_url', proj.demo_url)
-        proj.github_url = args.get('github_url', proj.github_url)
-        proj.download_url = args.get('download_url', proj.download_url)
-        proj.is_featured = args.get('is_featured', proj.is_featured)
-        
-        db.session.commit()
-        return jsonify(proj.serialize())
+        try:
+            proj = Project.query.get_or_404(id)
+            
+            # Load and validate data through schema
+            schema = ProjectSchema()
+            schema.context = {'create_mode': False}
+            
+            # Partial=True allows for partial updates
+            data = request.get_json()
+            proj = schema.load(data, instance=proj, partial=True)
+            
+            db.session.commit()
+            current_app.logger.info(f"Project updated: {proj.title} (ID: {id})")
+            
+            return jsonify(schema.dump(proj))
+            
+        except ValidationError as err:
+            current_app.logger.warning(f"Project update validation error for ID {id}: {err.messages}")
+            return {"errors": err.messages}, 400
+        except Exception as e:
+            current_app.logger.error(f"Error updating project ID {id}: {str(e)}")
+            db.session.rollback()
+            return {"error": "An error occurred while updating the project"}, 500
 
     def delete(self, id):
         """Delete a project"""
-        proj = Project.query.get_or_404(id)
-        db.session.delete(proj)
-        db.session.commit()
-        return '', 204
+        try:
+            proj = Project.query.get_or_404(id)
+            project_title = proj.title  # Store for logging before deletion
+            
+            db.session.delete(proj)
+            db.session.commit()
+            
+            current_app.logger.info(f"Project deleted: {project_title} (ID: {id})")
+            return '', 204
+            
+        except Exception as e:
+            current_app.logger.error(f"Error deleting project ID {id}: {str(e)}")
+            db.session.rollback()
+            return {"error": "An error occurred while deleting the project"}, 500

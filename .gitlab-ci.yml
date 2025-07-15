@@ -1,0 +1,50 @@
+stages:
+  - test
+  - coverage
+  - integration
+
+variables:
+  FLASK_ENV: "testing"
+  DATABASE_URL: "sqlite:///test_ci.db"
+
+# Cache pip dependencies between jobs
+cache:
+  paths:
+    - .pip-cache/
+
+before_script:
+  - python -V
+  - pip install -r requirements.txt
+  - pip install pytest pytest-cov
+
+unit_tests:
+  stage: test
+  image: python:3.11-slim
+  script:
+    - python -m pytest tests/test_*.py -v
+  artifacts:
+    paths:
+      - test-results/
+    expire_in: 1 week
+
+coverage:
+  stage: coverage
+  image: python:3.11-slim
+  script:
+    - python -m pytest tests/test_*.py --cov=routes.api --cov-report=xml --cov-report=term
+    - python -c "import xml.etree.ElementTree as ET; tree = ET.parse('coverage.xml'); root = tree.getroot(); print(f\"Total coverage: {root.attrib['line-rate']}\");"
+  artifacts:
+    paths:
+      - coverage.xml
+    expire_in: 1 week
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+integration_tests:
+  stage: integration
+  image: python:3.11-slim
+  script:
+    # We're skipping these for now since they require a running server
+    - echo "Integration tests will be implemented in a future update"
+    # - python -m pytest tests/integration/test_*.py -v
+  when: manual  # Make this a manual trigger for now

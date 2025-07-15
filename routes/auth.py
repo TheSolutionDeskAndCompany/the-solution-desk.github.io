@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from app import db, bcrypt
-from models.user import User
+from models.user import User, RoleEnum
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -36,9 +36,9 @@ def register():
         user = User(email=email)
         user.set_password(password)
         
-        # Make first user an admin
+        # Make first user an admin, others are viewers by default
         if User.query.count() == 0:
-            user.is_admin = True
+            user.role = RoleEnum.ADMIN.value
             
         db.session.add(user)
         db.session.commit()

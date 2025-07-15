@@ -1,0 +1,24 @@
+[bandit]
+# Skip tests that might cause false positives in testing frameworks
+skips: B101,B104
+
+# Directories to exclude from analysis
+exclude_dirs: tests,migrations,docs
+
+# Specify severity level
+# HIGH - only report high severity issues
+# MEDIUM - report medium and high severity issues
+# LOW - report all issues
+severity: LOW
+
+# Specify confidence level
+# HIGH - only report high confidence issues
+# MEDIUM - report medium and high confidence issues
+# LOW - report all issues
+confidence: MEDIUM
+
+# Consider progress report on the output
+verbose: true
+
+# File formats to exclude
+exclude_paths: [".git", "venv", ".venv", "**/*.pyc", "__pycache__", "tests/test_*.py"]

@@ -3,6 +3,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from utils.sentry import init_sentry
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
@@ -62,16 +63,21 @@ def create_app(config_name=None):
     from routes.projects import projects_bp
     from routes.tools import tools_bp
     from errors import errors as errors_bp
+    from routes.api.docs import api_docs_bp
     
     app.register_blueprint(main_bp)
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(projects_bp, url_prefix='/projects')
     app.register_blueprint(tools_bp, url_prefix='/tools')
     app.register_blueprint(errors_bp)
+    app.register_blueprint(api_docs_bp, url_prefix='/api')
     
     # Initialize Marshmallow
     from schemas import init_ma
     init_ma(app)
+    
+    # Initialize Sentry for production error monitoring
+    init_sentry(app)
     
     # Initialize Flask-RESTful API
     api.init_app(app)

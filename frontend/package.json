@@ -29,7 +29,9 @@
     "format": "prettier --write \"src/**/*.{js,jsx,json,css,md}\"",
     "eject": "react-scripts eject",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run --headless"
   },
   "eslintConfig": {
     "extends": [

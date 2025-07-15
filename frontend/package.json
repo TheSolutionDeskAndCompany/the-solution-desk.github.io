@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@sentry/react": "^9.38.0",
     "@sentry/tracing": "^7.120.3",
@@ -35,7 +36,8 @@
     "lhci:collect": "lhci collect",
     "lhci:assert": "lhci assert",
     "lhci:upload": "lhci upload",
-    "lhci:autorun": "lhci autorun"
+    "lhci:autorun": "lhci autorun",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -69,6 +71,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-storybook": "^9.0.16",
+    "husky": "^9.1.7",
     "jest": "^30.0.4",
     "prettier": "^3.6.2",
     "prop-types": "^15.8.1",

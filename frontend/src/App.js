@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import logo from "./logo.svg";
 import "./App.css";
 import IdeaForm from "./components/IdeaForm";
 import ProjectKanbanBoard from "./components/ProjectKanbanBoard";
@@ -9,6 +8,10 @@ import SOPViewerUploader from "./components/SOPViewerUploader";
 import KPIDashboard from "./components/KPIDashboard";
 import NotificationBell from "./components/NotificationBell";
 import CommentsThreadWrapper from "./components/CommentsThreadWrapper";
+import NavBar from "./components/NavBar";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // Temporarily commenting out problematic imports for testing environment variables
 // import { Formik } from 'formik';
@@ -38,31 +41,42 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <header className="App-header">
-          <div className="header-content">
-            <img src={logo} className="App-logo" alt="logo" />
-            <div className="header-right">
-              <NotificationBell />
-            </div>
-          </div>
-        </header>
+        <NavBar />
         <Routes>
           <Route path="/" element={
-            <div>
+            <div className="welcome-container">
               <h1>Welcome to The Solution Desk</h1>
-              <div className="nav-links">
-                <a href="/ideas/new" className="cyberpunk-link">Submit a New Idea</a>
-                <a href="/kanban" className="cyberpunk-link">Project Kanban Board</a>
-                <a href="/sop" className="cyberpunk-link">SOP Documents</a>
-                <a href="/kpi" className="cyberpunk-link">KPI Dashboard</a>
-              </div>
             </div>
           } />
-          <Route path="/ideas/new" element={<IdeaForm />} />
-          <Route path="/kanban" element={<ProjectKanbanBoard />} />
-          <Route path="/sop" element={<SOPViewerUploader />} />
-          <Route path="/kpi" element={<KPIDashboard />} />
-          <Route path="/entities/:id/comments" element={<CommentsThreadWrapper />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          
+          {/* Protected Routes */}
+          <Route path="/ideas/new" element={
+            <ProtectedRoute>
+              <IdeaForm />
+            </ProtectedRoute>
+          } />
+          <Route path="/kanban" element={
+            <ProtectedRoute>
+              <ProjectKanbanBoard />
+            </ProtectedRoute>
+          } />
+          <Route path="/sop" element={
+            <ProtectedRoute>
+              <SOPViewerUploader />
+            </ProtectedRoute>
+          } />
+          <Route path="/kpi" element={
+            <ProtectedRoute>
+              <KPIDashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/entities/:id/comments" element={
+            <ProtectedRoute>
+              <CommentsThreadWrapper />
+            </ProtectedRoute>
+          } />
         </Routes>
       </div>
     </Router>

@@ -1,0 +1,80 @@
+.cyberpunk-theme form {
+  background: rgba(15, 15, 26, 0.9);
+  color: #c5c6c7;
+  border: 2px solid #45a29e;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 400px;
+  margin: 3rem auto;
+  box-shadow: 0 0 20px rgba(102, 252, 241, 0.15);
+}
+
+.cyberpunk-theme h2 {
+  color: #66fcf1;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.cyberpunk-theme input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  background: rgba(31, 40, 51, 0.7);
+  border: 1px solid #45a29e;
+  color: #c5c6c7;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.cyberpunk-theme input:focus {
+  outline: none;
+  border-color: #66fcf1;
+  box-shadow: 0 0 0 2px rgba(102, 252, 241, 0.3);
+}
+
+.cyberpunk-theme button[type="submit"] {
+  width: 100%;
+  padding: 0.75rem;
+  background: #45a29e;
+  color: #0b0c10;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.cyberpunk-theme button[type="submit"]:hover:not(:disabled) {
+  background: #66fcf1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(102, 252, 241, 0.3);
+}
+
+.cyberpunk-theme button[type="submit"]:disabled {
+  background: #2a3035;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+.cyberpunk-theme .error {
+  color: #ff2e63;
+  font-size: 0.85rem;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+}
+
+.welcome-container {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.welcome-container h1 {
+  color: #66fcf1;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}

@@ -7,6 +7,7 @@ import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { AuthProvider } from './context/AuthContext';
 
 // Initialize Sentry
 Sentry.init({
@@ -22,16 +23,18 @@ const root = ReactDOM.createRoot(container);
 root.render(
   <React.StrictMode>
     <Sentry.ErrorBoundary fallback={"An unexpected error occurred"}>
-      <App />
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop
-        closeOnClick
-        pauseOnFocusLoss
-        draggable
-      />
+      <AuthProvider>
+        <App />
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar
+          newestOnTop
+          closeOnClick
+          pauseOnFocusLoss
+          draggable
+        />
+      </AuthProvider>
     </Sentry.ErrorBoundary>
   </React.StrictMode>,
 );

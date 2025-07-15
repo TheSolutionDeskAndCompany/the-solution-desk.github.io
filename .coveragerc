@@ -1,0 +1,22 @@
+[run]
+source = routes/, models/
+omit = 
+    */migrations/*
+    */tests/*
+    */__pycache__/*
+    */venv/*
+    */.venv/*
+    */node_modules/*
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    pass
+    raise ImportError
+    except ImportError:
+
+[html]
+directory = coverage_html_report

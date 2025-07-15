@@ -1,9 +1,12 @@
 import os
 import tempfile
 import pytest
+from datetime import datetime
 from app import create_app, db
 from models.project import Project
 from models.user import User, RoleEnum
+from models.idea import Idea
+from models.kpi import KPI
 from flask_login import login_user
 
 @pytest.fixture
@@ -32,6 +35,37 @@ def app():
             is_featured=True
         )
         db.session.add(test_project)
+        
+        # Add test ideas
+        test_idea_1 = Idea(
+            title='Test Idea 1',
+            description='A test idea with high priority',
+            status='new',
+            priority=1
+        )
+        
+        test_idea_2 = Idea(
+            title='Test Idea 2',
+            description='A test idea in progress',
+            status='in_progress',
+            priority=2
+        )
+        
+        db.session.add_all([test_idea_1, test_idea_2])
+        
+        # Add test KPIs
+        test_kpi = KPI(
+            title='Test KPI',
+            description='A test key performance indicator',
+            target_value=100.0,
+            current_value=75.0,
+            unit='percent',
+            category='Performance',
+            start_date=datetime.now(),
+            end_date=datetime(2025, 12, 31)
+        )
+        
+        db.session.add(test_kpi)
         
         # Create test users with different roles
         admin_user = User(email='admin@example.com', role=RoleEnum.ADMIN.value)
@@ -99,12 +133,36 @@ def viewer_client(app):
 @pytest.fixture
 def test_project():
     """A test project for use in tests."""
-    return {
-        'title': 'Test Project',
-        'slug': 'test-project',
-        'description': 'A test project',
-        'long_description': 'This is a longer description for the test project',
-        'github_url': 'https://github.com/test/project',
-        'download_url': '/downloads/test-project.zip',
-        'is_featured': True
-    }
+    return Project(
+        title='Test Project',
+        slug='test-project',
+        description='A test project',
+        long_description='This is a longer description for the test project',
+        github_url='https://github.com/test/project',
+        download_url='/downloads/test-project.zip',
+        is_featured=True
+    )
+
+@pytest.fixture
+def test_idea():
+    """A test idea for use in tests."""
+    return Idea(
+        title='Test Idea',
+        description='A test idea description',
+        status='new',
+        priority=1
+    )
+
+@pytest.fixture
+def test_kpi():
+    """A test KPI for use in tests."""
+    return KPI(
+        title='Test KPI',
+        description='A test key performance indicator',
+        target_value=100.0,
+        current_value=50.0,
+        unit='percent',
+        category='Performance',
+        start_date=datetime.now(),
+        end_date=datetime(2025, 12, 31)
+    )

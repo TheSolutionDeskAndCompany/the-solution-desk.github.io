@@ -25,6 +25,20 @@
   padding: 2rem;
 }
 
+.header-content {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
 .App-link {
   color: #66fcf1;
 }

@@ -7,6 +7,8 @@ import IdeaForm from "./components/IdeaForm";
 import ProjectKanbanBoard from "./components/ProjectKanbanBoard";
 import SOPViewerUploader from "./components/SOPViewerUploader";
 import KPIDashboard from "./components/KPIDashboard";
+import NotificationBell from "./components/NotificationBell";
+import CommentsThreadWrapper from "./components/CommentsThreadWrapper";
 
 // Temporarily commenting out problematic imports for testing environment variables
 // import { Formik } from 'formik';
@@ -37,7 +39,12 @@ function App() {
     <Router>
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <div className="header-content">
+            <img src={logo} className="App-logo" alt="logo" />
+            <div className="header-right">
+              <NotificationBell />
+            </div>
+          </div>
         </header>
         <Routes>
           <Route path="/" element={
@@ -55,6 +62,7 @@ function App() {
           <Route path="/kanban" element={<ProjectKanbanBoard />} />
           <Route path="/sop" element={<SOPViewerUploader />} />
           <Route path="/kpi" element={<KPIDashboard />} />
+          <Route path="/entities/:id/comments" element={<CommentsThreadWrapper />} />
         </Routes>
       </div>
     </Router>

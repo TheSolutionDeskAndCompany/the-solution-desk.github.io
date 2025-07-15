@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  {%- from 'macros/flash.html' import render_flashed_messages -%}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Smarter tools for small business — AI-assisted automation, CLI apps, and streamlined workflows.">
@@ -32,15 +33,29 @@
       </div>
       <ul class="nav-links">
         <li><a href="/">Home</a></li>
+        <li><a href="/projects">Projects</a></li>
         <li><a href="/tools">Tools</a></li>
         <li><a href="/contact">Contact</a></li>
         <li><a href="/downloads">Download</a></li>
+        {% if current_user.is_authenticated %}
+          <li><a href="{{ url_for('auth.profile') }}">Profile</a></li>
+          {% if current_user.is_admin %}
+          <li><a href="{{ url_for('admin.index') }}">Admin</a></li>
+          {% endif %}
+          <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+        {% else %}
+          <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+          <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+        {% endif %}
       </ul>
     </nav>
   </header>
 
   <main>
-    {% block content %}{% endblock %}
+    <div class="container">
+      {{ render_flashed_messages() }}
+      {% block content %}{% endblock %}
+    </div>
   </main>
 
   <footer>

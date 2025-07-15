@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Our Projects — The Solution Desk{% endblock %}
+
+{% block content %}
+<section class="projects">
+  <h1>Our Projects</h1>
+  <div class="project-grid">
+    {% for project_id, project in projects.items() %}
+    <div class="card">
+      <h3><a href="{{ url_for('project_detail', project_id=project_id) }}">{{ project.title }}</a></h3>
+      {% if project.description %}
+      <p>{{ project.description }}</p>
+      {% endif %}
+      {% if project.download %}
+      <a href="{{ project.download }}" class="button">Download</a>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

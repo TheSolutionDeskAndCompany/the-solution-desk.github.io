@@ -1,52 +1,119 @@
-from flask import Flask, render_template, send_from_directory, abort
 import os
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from flask_login import LoginManager
+from flask_bcrypt import Bcrypt
+from flask_admin import Admin
+from flask_restful import Api
+from config import config
 
-# Initialize Flask app, serve static at root to expose .well-known
-app = Flask(__name__, static_folder='static', static_url_path='')
+# Initialize extensions
+db = SQLAlchemy()
+migrate = Migrate()
+login_manager = LoginManager()
+bcrypt = Bcrypt()
+admin = Admin(name='Solution Desk Admin', template_mode='bootstrap3')
+api = Api()
 
-# Project definitions
-import json
+def create_app(config_name=None):
+    # Initialize Flask app
+    app = Flask(__name__, static_folder='static', static_url_path='')
+    
+    # Default to FLASK_ENV or 'development' if not specified
+    if config_name is None:
+        config_name = os.getenv('FLASK_ENV', 'development')
+    
+    # Load configuration
+    app.config.from_object(config[config_name])
+    config[config_name].init_app(app)
+    
+    # Load instance config (overrides default config)
+    app.config.from_pyfile('config.py', silent=True)
+    
+    # Initialize extensions
+    db.init_app(app)
+    migrate.init_app(app, db)
+    login_manager.init_app(app)
+    bcrypt.init_app(app)
+    
+    # Setup login manager
+    login_manager.login_view = 'auth.login'
+    login_manager.login_message_category = 'info'
+    
+    # Create upload folder if it doesn't exist
+    os.makedirs(os.path.join(app.root_path, app.config['UPLOAD_FOLDER']), exist_ok=True)
+    
+    # Register blueprints with URL prefixes
+    from routes.main import main as main_bp
+    from routes.projects import projects_bp
+    from routes.tools import tools_bp
+    from routes.auth import auth_bp
+    
+    app.register_blueprint(main_bp)
+    app.register_blueprint(projects_bp, url_prefix='/projects')
+    app.register_blueprint(tools_bp, url_prefix='/tools')
+    app.register_blueprint(auth_bp, url_prefix='/auth')
+    
+    # Initialize Flask-RESTful API
+    api.init_app(app)
+    
+    # Register API resources
+    from routes.api.projects import ProjectsAPI
+    from routes.api.ideas import IdeasAPI
+    from routes.api.sops import SopsAPI
+    from routes.api.users import UsersAPI
+    from routes.api.kpis import KpisAPI
+    
+    api.add_resource(ProjectsAPI, '/api/projects', '/api/projects/<int:id>')
+    api.add_resource(IdeasAPI, '/api/ideas', '/api/ideas/<int:id>')
+    api.add_resource(SopsAPI, '/api/sops', '/api/sops/<int:id>')
+    api.add_resource(UsersAPI, '/api/users', '/api/users/<int:id>')
+    api.add_resource(KpisAPI, '/api/kpis', '/api/kpis/<int:id>')
+    
+    # Create database tables
+    with app.app_context():
+        db.create_all()
+    
+    return app
 
-with open(os.path.join(app.root_path, 'projects.json')) as f:
-    projects = json.load(f)
+# User loader for Flask-Login
+@login_manager.user_loader
+def load_user(user_id):
+    from models.user import User
+    return User.query.get(int(user_id))
 
+# Initialize Flask-Admin
+def init_admin(app):
+    from flask_admin.contrib.sqla import ModelView
+    from models.project import Project
+    from models.user import User
+    from models.idea import Idea
+    from models.sop import SOP
+    from models.kpi import KPI
+    from flask_login import current_user
+    from flask import redirect, url_for
+    
+    class SecureModelView(ModelView):
+        def is_accessible(self):
+            return current_user.is_authenticated and current_user.is_admin
+        
+        def inaccessible_callback(self, name, **kwargs):
+            return redirect(url_for('auth.login'))
+    
+    admin.init_app(app)
+    admin.add_view(SecureModelView(User, db.session))
+    admin.add_view(SecureModelView(Project, db.session))
+    admin.add_view(SecureModelView(Idea, db.session))
+    admin.add_view(SecureModelView(SOP, db.session))
+    admin.add_view(SecureModelView(KPI, db.session))
 
-@app.route('/')
-def index():
-    return render_template('index.html', projects=projects)
+# Create app instance using environment variable or default to development
+app = create_app(os.getenv('FLASK_ENV') or 'development')
 
-@app.route('/projects')
-def projects_page():
-    return render_template('index.html', projects=projects)
-
-@app.route('/tools')
-def tools_page():
-    # Placeholder tools listing
-    tools = ['AutoHired', 'OrganiserPro', 'Process Optimization App', 'ShellTasker', 'QuickDeploy CLI']
-    return render_template('tools.html', tools=tools)
-
-@app.route('/contact')
-def contact():
-    return render_template('contact.html')
-
-@app.route('/downloads/<path:filename>')
-def download_file(filename):
-    return send_from_directory(os.path.join(app.root_path, 'downloads'), filename, as_attachment=True)
-
-@app.route('/.well-known/security.txt')
-def security_txt():
-    return send_from_directory(os.path.join(app.root_path, 'static', '.well-known'), 'security.txt')
-
-# Helper to create URL slugs
-def slugify(name):
-    return name.lower().replace(' ', '-')
-
-@app.route('/projects/<project_id>')
-def project_detail(project_id):
-    project = projects.get(project_id)
-    if not project:
-        abort(404)
-    return render_template('project_detail.html', project=project)
+# Initialize admin after app is created
+with app.app_context():
+    init_admin(app)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=int(os.getenv('PORT', 5000)))

@@ -1,14 +1,18 @@
 # Render service configuration
-# Ensure this is on the free tier
-
 services:
   - type: web
     name: thesolutiondesk
     runtime: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn app:app --bind 0.0.0.0:5000 --workers 3"
-    domains:
-      - "thesolutiondesk.ca"
-      - "www.thesolutiondesk.ca"
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn app:app --bind 0.0.0.0:$PORT --workers 3"
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.10.11"
+      - key: FLASK_APP
+        value: "app.py"
+      - key: FLASK_ENV
+        value: "production"
+      - key: PORT
+        value: 10000
     plan: free
     region: oregon

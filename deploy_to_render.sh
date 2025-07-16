@@ -1,114 +1,180 @@
 #!/bin/bash
 
-# 🚀 Deploy Backend to Render.com
-# Prerequisites: Bash, cURL, Render API key
+# 🚀 Deploy to Render.com
+# Prerequisites: Bash, cURL, jq, Render API key
 
-# Check if RENDER_API_KEY is set
-if [ -z "$RENDER_API_KEY" ]; then
-  echo "⛔ Error: RENDER_API_KEY environment variable is not set"
-  echo "Please set it using: export RENDER_API_KEY='your-api-key'"
-  exit 1
-fi
+set -e  # Exit on error
 
-# Check if DATABASE_URL is set
-if [ -z "$DATABASE_URL" ]; then
-  echo "❌ DATABASE_URL environment variable is not set"
-  exit 1
-fi
+# Enable debug logging if DEBUG is set
+[ -n "$DEBUG" ] && set -x
 
-# Check if JWT_SECRET is set
-if [ -z "$JWT_SECRET" ]; then
-  echo "⚠️ Warning: JWT_SECRET environment variable is not set"
-  echo "Attempting to use SECRET_KEY from .env file"
-  # Extract from .env if available
-  if [ -f .env ]; then
-    # Try to get JWT_SECRET first, then try SECRET_KEY
-    JWT_SECRET=$(grep JWT_SECRET .env | cut -d '=' -f2)
-    if [ -z "$JWT_SECRET" ]; then
-      JWT_SECRET=$(grep SECRET_KEY .env | cut -d '=' -f2)
-      echo "Found JWT_SECRET (from SECRET_KEY) in .env file"
-    else
-      echo "Found JWT_SECRET in .env file"
+# Constants
+SERVICE_NAME="thesolutiondesk"
+REPO_URL="https://github.com/TheSolutionDeskAndCompany/the-solution-desk.github.io.git"
+REGION="oregon"
+PLAN="free"
+
+# Logging function
+log() {
+    echo "[$(date +'%Y-%m-%d %H:%M:%S')] $1"
+}
+
+# Check if command exists
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+# Check for required commands
+for cmd in curl jq; do
+    if ! command_exists "$cmd"; then
+        log "❌ Error: $cmd is required but not installed"
+        exit 1
     fi
-  else
-    echo "No .env file found with JWT_SECRET"
-    echo "Please export JWT_SECRET='your-secret'"
-    exit 1
-  fi
-fi
+done
 
-# Get services to extract owner ID
-SERVICES_RESPONSE_FILE="render_services_response.json"
-curl -s -H "Authorization: Bearer $RENDER_API_KEY" \
-  "https://api.render.com/v1/services?limit=1" -o "$SERVICES_RESPONSE_FILE"
+# Check environment variables
+for var in RENDER_API_KEY DATABASE_URL JWT_SECRET; do
+    if [ -z "${!var}" ]; then
+        log "⚠️  Warning: $var is not set"
+        if [ "$var" = "JWT_SECRET" ] && [ -f .env ]; then
+            # Try to get JWT_SECRET from .env
+            JWT_SECRET=$(grep -E '^(JWT_SECRET|SECRET_KEY)=' .env | cut -d '=' -f2- | tr -d "'\"")
+            if [ -n "$JWT_SECRET" ]; then
+                log "ℹ️  Found $var in .env file"
+                continue
+            fi
+        fi
+        log "❌ Error: $var is required"
+        exit 1
+    fi
+done
 
-if [ ! -s "$SERVICES_RESPONSE_FILE" ]; then
-  echo "❌ Failed to get services. Please check your API key and network connection."
-  exit 1
-fi
+# API base URL
+API_BASE="https://api.render.com/v1"
 
-# Extract owner ID from the first service
-OWNER_ID=$(jq -r '.[0].service.ownerId' "$SERVICES_RESPONSE_FILE" 2>/dev/null)
+# Check if service exists
+log "🔍 Checking if service '$SERVICE_NAME' exists..."
+SERVICE_RESPONSE=$(curl -s -H "Authorization: Bearer $RENDER_API_KEY" \
+    "$API_BASE/services?name=$SERVICE_NAME" 2>/dev/null)
 
-if [ -z "$OWNER_ID" ] || [ "$OWNER_ID" = "null" ]; then
-  echo "❌ Failed to get owner ID from services. Possible reasons:"
-  echo "  1. No services found in your Render account"
-  echo "  2. API key doesn't have permission to access services"
-  echo "  3. Unexpected API response format"
-  echo "Response saved to $SERVICES_RESPONSE_FILE for inspection"
-  exit 1
-fi
+SERVICE_ID=$(echo "$SERVICE_RESPONSE" | jq -r '.[0].service.id // empty')
 
-echo "✅ Found owner ID: $OWNER_ID"
-
-echo "🔧 Creating Render web service..."
-RESPONSE=$(curl -X POST https://api.render.com/v1/services \
-  -H "Authorization: Bearer $RENDER_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "serviceType": "web",
-    "ownerId": "'$OWNER_ID'",
-    "name": "thesolutiondesk",
-    "repo": "https://github.com/TheSolutionDeskAndCompany/the-solution-desk.github.io.git",
-    "branch": "main",
+if [ -n "$SERVICE_ID" ]; then
+    log "🔄 Service '$SERVICE_NAME' found (ID: $SERVICE_ID), updating..."
+    
+    # Update existing service
+    UPDATE_RESPONSE=$(curl -s -X PATCH "$API_BASE/services/$SERVICE_ID" \
+        -H "Authorization: Bearer $RENDER_API_KEY" \
+        -H "Content-Type: application/json" \
+        -d @- <<EOF
+{
+    "autoDeploy": "yes",
     "envVars": [
-      {"key":"DATABASE_URL","value":"'"$DATABASE_URL"'"},
-      {"key":"JWT_SECRET","value":"'"$JWT_SECRET"'"},
-      {"key":"FLASK_ENV","value":"production"}
-    ],
-    "buildCommand": "pip install -r requirements.txt && cd frontend && npm install && npm run build && cd ..",
-    "startCommand": "gunicorn app:app --preload --bind 0.0.0.0:$PORT --workers 3"
-  }')
-
-echo "$RESPONSE"
-
-# Extract the service ID
-SERVICE_ID=$(echo $RESPONSE | grep -o '"id":"[^"]*' | cut -d'"' -f4)
-
-if [ -z "$SERVICE_ID" ]; then
-  echo "❌ Failed to get service ID. Please check the response above for errors."
-  exit 1
+        {"key":"DATABASE_URL","value":"$DATABASE_URL"},
+        {"key":"JWT_SECRET","value":"$JWT_SECRET"},
+        {"key":"FLASK_ENV","value":"production"}
+    ]
+}
+EOF
+    )
+    
+    if echo "$UPDATE_RESPONSE" | jq -e '.id' >/dev/null 2>&1; then
+        log "✅ Service updated successfully"
+    else
+        log "❌ Failed to update service. Response:"
+        echo "$UPDATE_RESPONSE" | jq .
+        exit 1
+    fi
+else
+    # Create new service
+    log "🆕 Service '$SERVICE_NAME' not found, creating new service..."
+    
+    # Get owner ID from user endpoint
+    OWNER_RESPONSE=$(curl -s -H "Authorization: Bearer $RENDER_API_KEY" \
+        "$API_BASE/account" 2>/dev/null)
+    OWNER_ID=$(echo "$OWNER_RESPONSE" | jq -r '.id // empty')
+    
+    if [ -z "$OWNER_ID" ]; then
+        log "❌ Failed to get owner ID. Please check your API key"
+        exit 1
+    fi
+    
+    CREATE_RESPONSE=$(curl -s -X POST "$API_BASE/services" \
+        -H "Authorization: Bearer $RENDER_API_KEY" \
+        -H "Content-Type: application/json" \
+        -d @- <<EOF
+{
+    "type": "web_service",
+    "name": "$SERVICE_NAME",
+    "ownerId": "$OWNER_ID",
+    "repo": "$REPO_URL",
+    "branch": "main",
+    "region": "$REGION",
+    "plan": "$PLAN",
+    "buildCommand": "pip install -r requirements.txt && cd frontend && npm install && npm run build",
+    "startCommand": "gunicorn app:app --preload --bind 0.0.0.0:\$PORT --workers 3",
+    "envVars": [
+        {"key":"DATABASE_URL","value":"$DATABASE_URL"},
+        {"key":"JWT_SECRET","value":"$JWT_SECRET"},
+        {"key":"FLASK_ENV","value":"production"}
+    ]
+}
+EOF
+    )
+    
+    SERVICE_ID=$(echo "$CREATE_RESPONSE" | jq -r '.id // empty')
+    
+    if [ -z "$SERVICE_ID" ]; then
+        log "❌ Failed to create service. Response:"
+        echo "$CREATE_RESPONSE" | jq .
+        exit 1
+    fi
+    
+    log "✅ Service created with ID: $SERVICE_ID"
 fi
 
-echo "✅ Service created with ID: $SERVICE_ID"
-echo "🌐 Your service will be live at: https://thesolutiondesk.onrender.com"
+# Trigger deployment
+log "🚀 Triggering deployment..."
+DEPLOY_RESPONSE=$(curl -s -X POST "$API_BASE/services/$SERVICE_ID/deploys" \
+    -H "Authorization: Bearer $RENDER_API_KEY" \
+    -H "Content-Type: application/json" \
+    -d '{"clearCache": "clear"}' 2>/dev/null)
 
-echo "🚀 Triggering initial deploy..."
-DEPLOY_RESPONSE=$(curl -X POST "https://api.render.com/v1/services/$SERVICE_ID/deploys" \
-  -H "Authorization: Bearer $RENDER_API_KEY")
+DEPLOY_ID=$(echo "$DEPLOY_RESPONSE" | jq -r '.id // empty')
 
-echo "$DEPLOY_RESPONSE"
+if [ -n "$DEPLOY_ID" ]; then
+    DEPLOY_URL="https://dashboard.render.com/web/$SERVICE_ID/deploys/$DEPLOY_ID"
+    log "✅ Deployment triggered successfully!"
+    log "📊 Check deployment status at: $DEPLOY_URL"
+    log "🌐 Your service will be available at: https://$SERVICE_NAME.onrender.com"
+    
+    # Simple health check
+    log "⏳ Waiting for service to be healthy..."
+    until curl -sSf "https://$SERVICE_NAME.onrender.com/health" >/dev/null 2>&1; do
+        echo -n "."
+        sleep 5
+    done
+    echo ""
+    log "✅ Service is healthy!"
+else
+    log "❌ Failed to trigger deployment. Response:"
+    echo "$DEPLOY_RESPONSE" | jq .
+    exit 1
+fi
 
-echo "
+log "
 📋 Deployment Summary:"
-echo "🔗 Service URL: https://thesolutiondesk.onrender.com"
-echo "📊 Dashboard: https://dashboard.render.com/services/$SERVICE_ID/deploys"
-echo "
+log "🔗 Service URL: https://$SERVICE_NAME.onrender.com"
+log "📊 Dashboard: https://dashboard.render.com/services/$SERVICE_ID/deploys"
+log "
 🔍 To verify the health of your backend, run:"
-echo "-----------------------------------------------------------"
-echo "until curl -sSf https://thesolutiondesk.onrender.com/health; do"
-echo "  echo "⏳ Waiting for backend…""
-echo "  sleep 5"
+log "-----------------------------------------------------------"
+log "until curl -sSf https://$SERVICE_NAME.onrender.com/health; do"
+log "  echo \"⏳ Waiting for backend…\""
+log "  sleep 5"
+log "done"
+log "echo \"🚀 Backend is live!\""
+log "-----------------------------------------------------------"
 echo "done"
 echo "echo "🚀 Backend is live!""
 echo "-----------------------------------------------------------"

@@ -40,7 +40,7 @@ fi
 # Get owner ID
 ACCOUNT_RESPONSE_FILE="render_account_response.json"
 curl -s -H "Authorization: Bearer $RENDER_API_KEY" \
-  https://api.render.com/v1/users/me -o "$ACCOUNT_RESPONSE_FILE"
+  https://api.render.com/v2/user -o "$ACCOUNT_RESPONSE_FILE"
 
 if [ ! -s "$ACCOUNT_RESPONSE_FILE" ]; then
   echo "❌ Failed to get account response. Please check your API key and network connection."

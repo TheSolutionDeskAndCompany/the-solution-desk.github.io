@@ -3,8 +3,8 @@
 set -e
 
 # Install the specified Python version
-echo "-----> Installing Python 3.10.11"
-python --version
+echo "-----> Installing Python 3.11.14"
+python3.11 --version
 
 # Install pip
 echo "-----> Installing pip"

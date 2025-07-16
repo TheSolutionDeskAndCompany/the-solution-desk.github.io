@@ -91,6 +91,8 @@ pytest
 
 ## Deployment
 
+### Local Deployment
+
 1. For production, set up a WSGI server like Gunicorn:
    ```bash
    pip install gunicorn
@@ -103,6 +105,84 @@ pytest
    SECRET_KEY=your-secret-key
    DATABASE_URL=your-database-url
    ```
+
+### 🚀 Deploying the Backend to Render
+
+#### Prerequisites
+
+1. **Bash**
+2. **cURL**
+3. **Render API key** (from your Render dashboard)
+4. A `.env` file (optional) containing:
+
+   ```
+   DATABASE_URL=your_database_url
+   JWT_SECRET=your_jwt_secret
+   ```
+
+#### 1. Export Your Render API Key
+
+```bash
+export RENDER_API_KEY="your_actual_render_api_key"
+```
+
+#### 2. Export (or Provide) App Secrets
+
+If you don't want to use a `.env` file, export directly:
+
+```bash
+export DATABASE_URL="your_database_url"
+export JWT_SECRET="your_jwt_secret"
+```
+
+*Note:* If `DATABASE_URL` or `JWT_SECRET` aren't in your environment, the script will fall back to reading them from `.env` in the current directory.
+
+#### 3. Run the Deployment Script
+
+```bash
+chmod +x deploy_to_render.sh
+./deploy_to_render.sh
+```
+
+* **What it does under the hood:**
+
+  1. Creates (or updates) a Web Service on Render linked to your GitHub repo's `main` branch.
+  2. Injects your `DATABASE_URL` and `JWT_SECRET` as env vars.
+  3. Sets `buildCommand` and `startCommand` for your Python backend.
+  4. Triggers the first deploy automatically.
+
+#### 4. Track Your Deploy
+
+* After the script runs, you'll see:
+
+  ```
+  Service ID: srv-abc123xyz
+  Deployment triggered at: https://dashboard.render.com/services/ow-backend/deploys
+  ```
+* **Optional:** Copy that URL into your browser or run:
+
+  ```bash
+  curl -s https://dashboard.render.com/services/ow-backend/deploys
+  ```
+
+#### 5. Verify Health
+
+Either:
+
+```bash
+curl -sSf https://ow-backend.onrender.com/health && echo "✅ Backend is healthy!"
+```
+
+Or let the built-in wait loop run automatically:
+
+```bash
+# (This is printed for you at the end of deploy_to_render.sh)
+until curl -sSf https://ow-backend.onrender.com/health; do
+  echo "⏳ Waiting for backend…"
+  sleep 5
+done
+echo "🚀 Backend is live!"
+```
 
 ## License
 

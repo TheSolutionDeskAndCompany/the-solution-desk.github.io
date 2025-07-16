@@ -37,25 +37,29 @@ if [ -z "$JWT_SECRET" ]; then
   fi
 fi
 
-# Get owner ID
-ACCOUNT_RESPONSE_FILE="render_account_response.json"
+# Get services to extract owner ID
+SERVICES_RESPONSE_FILE="render_services_response.json"
 curl -s -H "Authorization: Bearer $RENDER_API_KEY" \
-  https://api.render.com/v2/user -o "$ACCOUNT_RESPONSE_FILE"
+  "https://api.render.com/v1/services?limit=1" -o "$SERVICES_RESPONSE_FILE"
 
-if [ ! -s "$ACCOUNT_RESPONSE_FILE" ]; then
-  echo "❌ Failed to get account response. Please check your API key and network connection."
+if [ ! -s "$SERVICES_RESPONSE_FILE" ]; then
+  echo "❌ Failed to get services. Please check your API key and network connection."
   exit 1
 fi
 
-OWNER_ID=$(jq -r '.user.id' "$ACCOUNT_RESPONSE_FILE" 2>/dev/null)
+# Extract owner ID from the first service
+OWNER_ID=$(jq -r '.[0].service.ownerId' "$SERVICES_RESPONSE_FILE" 2>/dev/null)
 
-if [ -z "$OWNER_ID" ]; then
-  echo "❌ Failed to get owner ID. Possible reasons:"
-  echo "  1. Invalid API response format"
-  echo "  2. API key doesn't have permission"
-  echo "Response saved to $ACCOUNT_RESPONSE_FILE for inspection"
+if [ -z "$OWNER_ID" ] || [ "$OWNER_ID" = "null" ]; then
+  echo "❌ Failed to get owner ID from services. Possible reasons:"
+  echo "  1. No services found in your Render account"
+  echo "  2. API key doesn't have permission to access services"
+  echo "  3. Unexpected API response format"
+  echo "Response saved to $SERVICES_RESPONSE_FILE for inspection"
   exit 1
 fi
+
+echo "✅ Found owner ID: $OWNER_ID"
 
 echo "🔧 Creating Render web service..."
 RESPONSE=$(curl -X POST https://api.render.com/v1/services \

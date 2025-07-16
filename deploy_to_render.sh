@@ -54,7 +54,7 @@ RESPONSE=$(curl -X POST https://api.render.com/v1/services \
       {"key":"JWT_SECRET","value":"'"$JWT_SECRET"'"},
       {"key":"FLASK_ENV","value":"production"}
     ],
-    "buildCommand": "pip install -r requirements.txt",
+    "buildCommand": "pip install -r requirements.txt && cd frontend && npm install && npm run build && cd ..",
     "startCommand": "gunicorn app:app --preload --bind 0.0.0.0:$PORT --workers 3"
   }')
 

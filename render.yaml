@@ -2,7 +2,6 @@
 services:
   - type: web
     name: thesolutiondesk
-    runtime: python  # Version controlled by runtime.txt
     buildCommand: |
       pip install -r requirements.txt
     startCommand: "gunicorn wsgi:application --bind 0.0.0.0:$PORT --preload"

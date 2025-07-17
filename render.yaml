@@ -2,12 +2,11 @@
 services:
   - type: web
     name: thesolutiondesk
-    runtime: python  # Use the generic Python runtime
+    runtime: python  # Uses python-3.11.4 from runtime.txt
     buildCommand: |
       python -m pip install --upgrade pip
-      # Install Python dependencies
-      pip install --no-cache-dir -r requirements.txt
-    startCommand: "gunicorn wsgi:app --bind 0.0.0.0:$PORT --workers 3"
+      pip install --no-cache-dir -e .  # Install package in development mode
+    startCommand: "gunicorn wsgi:application --bind 0.0.0.0:$PORT --workers 3"
     envVars:
       - key: FLASK_APP
         value: "app.py"
@@ -17,5 +16,7 @@ services:
         value: 10000
       - key: SERVER_NAME
         value: "www.thesolutiondesk.ca"
+      - key: PYTHON_VERSION
+        value: "3.11.4"
     plan: free
     region: oregon

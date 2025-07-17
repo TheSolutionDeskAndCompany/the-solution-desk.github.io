@@ -7,7 +7,7 @@ services:
     startCommand: "gunicorn wsgi:app --bind 0.0.0.0:$PORT --workers 3"
     envVars:
       - key: PYTHON_VERSION
-        value: "3.11.6"
+        value: "3.11.4"
       - key: FLASK_APP
         value: "app.py"
       - key: FLASK_ENV

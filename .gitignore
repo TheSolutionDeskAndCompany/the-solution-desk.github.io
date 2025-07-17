@@ -76,3 +76,6 @@ Thumbs.db
 *.pid
 logs/
 render.yaml
+
+# Local Netlify folder
+.netlify

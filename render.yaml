@@ -2,7 +2,7 @@
 services:
   - type: web
     name: thesolutiondesk
-    runtime: python  # Uses python-3.11.4 from runtime.txt
+    runtime: python  # Version controlled by runtime.txt
     buildCommand: |
       python -m pip install --upgrade pip
       pip install --no-cache-dir -e .  # Install package in development mode

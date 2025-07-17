@@ -18,7 +18,6 @@ import Footer from "./components/Footer";
 // import { Formik } from 'formik';
 // import * as Yup from 'yup';
 // import { BarChart } from 'recharts';
-// import { DragDropContext } from 'react-beautiful-dnd';
 
 function App() {
   console.log("API URL:", process.env.REACT_APP_API_URL);

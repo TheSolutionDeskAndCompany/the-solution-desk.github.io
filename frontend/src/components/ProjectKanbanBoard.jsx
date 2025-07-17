@@ -1,28 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import React, { useState } from "react";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import "./ProjectKanbanBoard.css";
 
-// This is a workaround for react-beautiful-dnd not working with React 19 and StrictMode
-// See: https://github.com/atlassian/react-beautiful-dnd/issues/2399
-const useUnsafeStrictModePatch = () => {
-  useEffect(() => {
-    // Hack for react-beautiful-dnd to work with React 19
-    const originalConsoleError = console.error;
-    console.error = (...args) => {
-      if (
-        typeof args[0] === "string" &&
-        args[0].includes("findDOMNode is deprecated in StrictMode")
-      ) {
-        return;
-      }
-      originalConsoleError(...args);
-    };
-
-    return () => {
-      console.error = originalConsoleError;
-    };
-  }, []);
-};
 
 const initialData = {
   toDo: [
@@ -41,8 +20,6 @@ const initialData = {
 };
 
 export default function ProjectKanbanBoard() {
-  // Apply the workaround for React 19 compatibility
-  useUnsafeStrictModePatch();
 
   const [data, setData] = useState(initialData);
 

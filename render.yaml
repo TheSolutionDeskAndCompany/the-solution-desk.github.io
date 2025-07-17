@@ -14,5 +14,7 @@ services:
         value: "production"
       - key: PORT
         value: 10000
+      - key: SERVER_NAME
+        value: "www.thesolutiondesk.ca"
     plan: free
     region: oregon

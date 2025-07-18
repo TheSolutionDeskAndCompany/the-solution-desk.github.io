@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import "./ProjectKanbanBoard.css";
 
-
 const initialData = {
   toDo: [
     { id: "1", content: "Research competitor products", priority: "high" },
@@ -20,7 +19,6 @@ const initialData = {
 };
 
 export default function ProjectKanbanBoard() {
-
   const [data, setData] = useState(initialData);
 
   const handleDragEnd = (result) => {
@@ -73,7 +71,7 @@ export default function ProjectKanbanBoard() {
   };
 
   return (
-    <div className="kanban-container cyberpunk-theme">
+    <div className="kanban-container cyberpunk-theme" data-cy="kanban-board">
       <h1>Project Kanban Board</h1>
       <div className="kanban-info">
         <p>Drag and drop tasks between columns to update their status.</p>
@@ -82,7 +80,7 @@ export default function ProjectKanbanBoard() {
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className="kanban-board">
           {["toDo", "inProgress", "done"].map((columnId) => (
-            <div key={columnId} className="kanban-column-wrapper">
+            <div key={columnId} data-cy={`column-${columnId.toLowerCase()}`} className="kanban-column-wrapper">
               <h2 className="column-title">{getColumnTitle(columnId)}</h2>
               <Droppable droppableId={columnId}>
                 {(provided, snapshot) => (
@@ -103,6 +101,7 @@ export default function ProjectKanbanBoard() {
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
                             className={`kanban-card ${getPriorityClass(task.priority)} ${snapshot.isDragging ? "dragging" : ""}`}
+                            data-cy={`card-${task.id}`}
                           >
                             <div className="card-content">{task.content}</div>
                             <div className="card-priority">{task.priority}</div>

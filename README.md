@@ -1,17 +1,63 @@
 # The Solution Desk
 
-A Flask-based web application for The Solution Desk, featuring project showcases, tools, and contact information.
+A modern web application for The Solution Desk, featuring an interactive Kanban board, project management tools, and more.
 
 **Live here:** https://the-solution-desk.github.io
 
+[![E2E Tests](https://github.com/TheSolutionDeskAndCompany/the-solution-desk.github.io/actions/workflows/cypress.yml/badge.svg)](https://github.com/TheSolutionDeskAndCompany/the-solution-desk.github.io/actions/workflows/cypress.yml)
+
 ## Features
 
-- Project showcase with detailed views
-- Tools and utilities section
-- Contact form
+- Interactive Kanban board with drag-and-drop functionality
+- Project management tools
+- Real-time updates
 - Responsive design
-- Database integration
-- Testing framework
+- Comprehensive testing suite
+- CI/CD pipeline with GitHub Actions
+
+## Development
+
+### Prerequisites
+
+- Node.js 18+
+- npm 9+
+
+### Getting Started
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   cd frontend
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm start
+   ```
+4. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+### Testing
+
+Run the test suite:
+
+```bash
+# Run all tests
+npm test
+
+# Run E2E tests with Cypress
+npm run cy:open  # Interactive mode
+npm run cy:run   # Headless mode
+```
+
+### CI/CD
+
+This project uses GitHub Actions for continuous integration and deployment. The following workflows are configured:
+
+- **E2E Tests**: Runs on every push and pull request to main branches
+  - Installs dependencies
+  - Starts the development server
+  - Runs Cypress end-to-end tests
+  - Generates test artifacts and videos
 
 ## Project Structure
 

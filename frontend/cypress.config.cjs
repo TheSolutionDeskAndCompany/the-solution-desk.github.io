@@ -7,12 +7,19 @@ module.exports = defineConfig({
     supportFile: 'cypress/support/commands.js',
     viewportWidth: 1280,
     viewportHeight: 800,
-    setupNodeEvents() {
+    video: true,
+    videoUploadOnPasses: false,
+    retries: {
+      runMode: 2,
+      openMode: 0
+    },
+    setupNodeEvents(on, config) {
       // implement node event listeners here if needed
-      return null;
+      return config;
     },
   },
   env: {
-    // Add any environment variables here
+    // Add any environment variables here for testing
+    CI: process.env.CI === 'true',
   },
 });

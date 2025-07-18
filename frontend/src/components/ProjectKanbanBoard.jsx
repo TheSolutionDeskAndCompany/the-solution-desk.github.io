@@ -80,7 +80,11 @@ export default function ProjectKanbanBoard() {
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className="kanban-board">
           {["toDo", "inProgress", "done"].map((columnId) => (
-            <div key={columnId} data-cy={`column-${columnId.toLowerCase()}`} className="kanban-column-wrapper">
+            <div
+              key={columnId}
+              data-cy={`column-${columnId.toLowerCase()}`}
+              className="kanban-column-wrapper"
+            >
               <h2 className="column-title">{getColumnTitle(columnId)}</h2>
               <Droppable droppableId={columnId}>
                 {(provided, snapshot) => (

@@ -1,8 +1,5 @@
 .App {
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
 }
 
 .App-logo {
@@ -17,83 +14,18 @@
 }
 
 .App-header {
-  background-color: #0f0f1a;
-  min-height: 20vh;
+  background-color: #282c34;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: #66fcf1;
-  padding: 2rem;
-}
-
-.header-content {
-  display: flex;
-  width: 100%;
-  max-width: 1200px;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-}
-
-.main-content {
-  flex: 1;
-  padding: 1rem;
+  color: white;
 }
 
 .App-link {
-  color: #66fcf1;
-}
-
-.cyberpunk-link {
-  display: inline-block;
-  margin: 1rem;
-  padding: 1rem 2rem;
-  background: #0f0f1a;
-  color: #66fcf1;
-  text-decoration: none;
-  border: 2px solid #45a29e;
-  font-weight: bold;
-  border-radius: 4px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: all 0.3s ease;
-}
-
-.cyberpunk-link:hover {
-  background: #66fcf1;
-  color: #0b0c10;
-  transform: translateY(-3px);
-  box-shadow: 0 4px 8px rgba(102, 252, 241, 0.3);
-  box-shadow: 0 0 15px rgba(102, 252, 241, 0.5);
-}
-
-body {
-  background-color: #1f1f2a;
-  color: #c5c6c7;
-  font-family: sans-serif;
-}
-
-.nav-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-@media (max-width: 600px) {
-  .cyberpunk-link {
-    margin: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    font-size: 0.9rem;
-  }
+  color: #61dafb;
 }
 
 @keyframes App-logo-spin {

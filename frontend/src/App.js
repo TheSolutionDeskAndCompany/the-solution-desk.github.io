@@ -1,111 +1,135 @@
-import React, { useEffect } from "react";
-import axios from "axios";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
-import theme from "./theme";
-import "./App.css";
-import IdeaForm from "./components/IdeaForm";
-import ProjectKanbanBoard from "./components/ProjectKanbanBoard";
-import SOPViewerUploader from "./components/SOPViewerUploader";
-import KPIDashboard from "./components/KPIDashboard";
-import NotificationBell from "./components/NotificationBell";
-import CommentsThreadWrapper from "./components/CommentsThreadWrapper";
-import NavBar from "./components/NavBar";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Footer from "./components/Footer";
-
-// Temporarily commenting out problematic imports for testing environment variables
-// import { Formik } from 'formik';
-// import * as Yup from 'yup';
-// import { BarChart } from 'recharts';
+import React from 'react';
+import {
+  Box,
+  Container,
+  Heading,
+  Text,
+  Button,
+  VStack,
+  HStack,
+  Card,
+  CardBody,
+  SimpleGrid,
+  useColorModeValue,
+} from '@chakra-ui/react';
+import Header from './components/Header';
+import './App.css';
 
 function App() {
-  console.log("API URL:", process.env.REACT_APP_API_URL);
-  console.log("Sentry DSN:", process.env.REACT_APP_SENTRY_DSN);
-
-  useEffect(() => {
-    // Skip all side effects during testing
-    if (process.env.NODE_ENV === "test") {
-      return;
-    }
-
-    // Make API call if we have the API URL
-    if (process.env.REACT_APP_API_URL) {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/health`)
-        .then((res) => console.log("Health:", res.data))
-        .catch((err) => console.error("Health-check failed:", err));
-    }
-  }, []);
+  const bgColor = useColorModeValue('gray.50', 'darkBg.100');
+  const cardBg = useColorModeValue('white', 'darkBg.200');
 
   return (
-    <ChakraProvider theme={theme}>
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <Router>
-        <div className="App">
-          <NavBar />
-          <main className="main-content">
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <div className="welcome-container">
-                    <h1>Welcome to The Solution Desk</h1>
-                  </div>
-                }
-              />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-
-              {/* Protected Routes */}
-              <Route
-                path="/ideas/new"
-                element={
-                  <ProtectedRoute>
-                    <IdeaForm />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/kanban"
-                element={
-                  <ProtectedRoute>
-                    <ProjectKanbanBoard />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/sop"
-                element={
-                  <ProtectedRoute>
-                    <SOPViewerUploader />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/kpi"
-                element={
-                  <ProtectedRoute>
-                    <KPIDashboard />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/entities/:id/comments"
-                element={
-                  <ProtectedRoute>
-                    <CommentsThreadWrapper />
-                  </ProtectedRoute>
-                }
-              />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </Router>
-    </ChakraProvider>
+    <Box minH="100vh" bg={bgColor}>
+      <Header />
+      
+      {/* Hero Section */}
+      <Container maxW="7xl" py={20}>
+        <VStack spacing={8} textAlign="center">
+          <Heading
+            as="h1"
+            size="2xl"
+            bgGradient="linear(to-r, neonPink.400, neonBlue.400, neonGreen.400)"
+            bgClip="text"
+            textShadow="0 0 20px rgba(241, 70, 255, 0.3)"
+          >
+            Welcome to The Solution Desk
+          </Heading>
+          
+          <Text
+            fontSize="xl"
+            color="neonBlue.200"
+            maxW="2xl"
+            lineHeight="tall"
+          >
+            Your cyber-punk powered workspace for managing projects, tools, and workflows 
+            with cutting-edge technology and neon-bright efficiency.
+          </Text>
+          
+          <HStack spacing={4}>
+            <Button size="lg" variant="solid">
+              Get Started
+            </Button>
+            <Button size="lg" variant="outline">
+              Learn More
+            </Button>
+          </HStack>
+        </VStack>
+      </Container>
+      
+      {/* Features Section */}
+      <Container maxW="7xl" py={16}>
+        <VStack spacing={12}>
+          <Heading
+            as="h2"
+            size="xl"
+            textAlign="center"
+            color="neonPink.300"
+            textShadow="0 0 15px rgba(241, 70, 255, 0.4)"
+          >
+            Cyber-Punk Features
+          </Heading>
+          
+          <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={8}>
+            <Card bg={cardBg} borderColor="neonPink.600" borderWidth="1px">
+              <CardBody>
+                <VStack spacing={4}>
+                  <Text fontSize="3xl">💡</Text>
+                  <Heading size="md" color="neonPink.300">
+                    Smart Projects
+                  </Heading>
+                  <Text color="neonBlue.200" textAlign="center">
+                    AI-powered project management with neon-bright insights
+                  </Text>
+                </VStack>
+              </CardBody>
+            </Card>
+            
+            <Card bg={cardBg} borderColor="neonBlue.600" borderWidth="1px">
+              <CardBody>
+                <VStack spacing={4}>
+                  <Text fontSize="3xl">🔧</Text>
+                  <Heading size="md" color="neonBlue.300">
+                    Cyber Tools
+                  </Heading>
+                  <Text color="neonBlue.200" textAlign="center">
+                    Advanced toolset for the digital workspace of tomorrow
+                  </Text>
+                </VStack>
+              </CardBody>
+            </Card>
+            
+            <Card bg={cardBg} borderColor="neonGreen.600" borderWidth="1px">
+              <CardBody>
+                <VStack spacing={4}>
+                  <Text fontSize="3xl">📋</Text>
+                  <Heading size="md" color="neonGreen.300">
+                    Neon Kanban
+                  </Heading>
+                  <Text color="neonBlue.200" textAlign="center">
+                    Visualize workflows with glowing efficiency metrics
+                  </Text>
+                </VStack>
+              </CardBody>
+            </Card>
+            
+            <Card bg={cardBg} borderColor="neonPurple.600" borderWidth="1px">
+              <CardBody>
+                <VStack spacing={4}>
+                  <Text fontSize="3xl">⚡</Text>
+                  <Heading size="md" color="neonPurple.300">
+                    Lightning Fast
+                  </Heading>
+                  <Text color="neonBlue.200" textAlign="center">
+                    Blazing performance with cyber-punk aesthetics
+                  </Text>
+                </VStack>
+              </CardBody>
+            </Card>
+          </SimpleGrid>
+        </VStack>
+      </Container>
+    </Box>
   );
 }
 

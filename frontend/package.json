@@ -34,6 +34,8 @@
     "format": "prettier --write \"src/**/*.{js,jsx,json,css,md}\"",
     "cy:open": "cypress open --config-file cypress.config.cjs",
     "cy:run": "cypress run --config-file cypress.config.cjs",
+    "test:staging": "node scripts/test-staging.js",
+    "test:staging:ci": "node scripts/test-staging.js --headless",
     "eject": "react-scripts eject",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",

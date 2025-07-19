@@ -1,0 +1,104 @@
+name: E2E Tests - Staging
+
+on:
+  workflow_dispatch:
+    inputs:
+      staging_frontend_url:
+        description: 'Staging Frontend URL'
+        required: false
+        default: 'https://your-netlify-domain.netlify.app'
+      staging_backend_url:
+        description: 'Staging Backend URL'
+        required: false
+        default: 'https://ow-backend.onrender.com'
+  schedule:
+    # Run E2E tests against staging daily at 6 AM UTC
+    - cron: '0 6 * * *'
+
+jobs:
+  e2e-staging:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+
+    - name: Install frontend dependencies
+      run: |
+        cd frontend
+        npm ci
+
+    - name: Wait for staging services to be ready
+      run: |
+        echo "Waiting for staging services to be available..."
+        FRONTEND_URL="${{ github.event.inputs.staging_frontend_url || env.STAGING_FRONTEND_URL || 'https://your-netlify-domain.netlify.app' }}"
+        BACKEND_URL="${{ github.event.inputs.staging_backend_url || env.STAGING_BACKEND_URL || 'https://ow-backend.onrender.com' }}"
+        
+        # Wait for frontend
+        for i in {1..30}; do
+          if curl -f -s "$FRONTEND_URL" > /dev/null; then
+            echo "Frontend is ready at $FRONTEND_URL"
+            break
+          fi
+          echo "Waiting for frontend... ($i/30)"
+          sleep 10
+        done
+        
+        # Wait for backend
+        for i in {1..30}; do
+          if curl -f -s "$BACKEND_URL/health" > /dev/null; then
+            echo "Backend is ready at $BACKEND_URL"
+            break
+          fi
+          echo "Waiting for backend... ($i/30)"
+          sleep 10
+        done
+
+    - name: Run Cypress E2E tests against staging
+      run: |
+        cd frontend
+        STAGING_FRONTEND_URL="${{ github.event.inputs.staging_frontend_url || env.STAGING_FRONTEND_URL || 'https://your-netlify-domain.netlify.app' }}"
+        STAGING_BACKEND_URL="${{ github.event.inputs.staging_backend_url || env.STAGING_BACKEND_URL || 'https://ow-backend.onrender.com' }}"
+        
+        echo "Running E2E tests against:"
+        echo "Frontend: $STAGING_FRONTEND_URL"
+        echo "Backend: $STAGING_BACKEND_URL"
+        
+        STAGING_FRONTEND_URL="$STAGING_FRONTEND_URL" \
+        STAGING_BACKEND_URL="$STAGING_BACKEND_URL" \
+        npm run test:staging:ci
+      env:
+        STAGING_FRONTEND_URL: ${{ secrets.STAGING_FRONTEND_URL }}
+        STAGING_BACKEND_URL: ${{ secrets.STAGING_BACKEND_URL }}
+
+    - name: Upload Cypress screenshots on failure
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: cypress-screenshots
+        path: frontend/cypress/screenshots
+        retention-days: 7
+
+    - name: Upload Cypress videos
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: cypress-videos
+        path: frontend/cypress/videos
+        retention-days: 7
+
+    - name: Create test report
+      if: always()
+      run: |
+        echo "## E2E Test Results" >> $GITHUB_STEP_SUMMARY
+        echo "**Frontend URL:** ${{ github.event.inputs.staging_frontend_url || env.STAGING_FRONTEND_URL || 'https://your-netlify-domain.netlify.app' }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Backend URL:** ${{ github.event.inputs.staging_backend_url || env.STAGING_BACKEND_URL || 'https://ow-backend.onrender.com' }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Test Status:** ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Run Date:** $(date)" >> $GITHUB_STEP_SUMMARY

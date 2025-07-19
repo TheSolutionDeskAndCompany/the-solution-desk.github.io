@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
+import theme from './theme';
 import "./App.css";
 import IdeaForm from "./components/IdeaForm";
 import ProjectKanbanBoard from "./components/ProjectKanbanBoard";
@@ -39,68 +41,71 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <div className="App">
-        <NavBar />
-        <main className="main-content">
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <div className="welcome-container">
-                  <h1>Welcome to The Solution Desk</h1>
-                </div>
-              }
-            />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+    <ChakraProvider theme={theme}>
+      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+      <Router>
+        <div className="App">
+          <NavBar />
+          <main className="main-content">
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <div className="welcome-container">
+                    <h1>Welcome to The Solution Desk</h1>
+                  </div>
+                }
+              />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
 
-            {/* Protected Routes */}
-            <Route
-              path="/ideas/new"
-              element={
-                <ProtectedRoute>
-                  <IdeaForm />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/kanban"
-              element={
-                <ProtectedRoute>
-                  <ProjectKanbanBoard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/sop"
-              element={
-                <ProtectedRoute>
-                  <SOPViewerUploader />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/kpi"
-              element={
-                <ProtectedRoute>
-                  <KPIDashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/entities/:id/comments"
-              element={
-                <ProtectedRoute>
-                  <CommentsThreadWrapper />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+              {/* Protected Routes */}
+              <Route
+                path="/ideas/new"
+                element={
+                  <ProtectedRoute>
+                    <IdeaForm />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/kanban"
+                element={
+                  <ProtectedRoute>
+                    <ProjectKanbanBoard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/sop"
+                element={
+                  <ProtectedRoute>
+                    <SOPViewerUploader />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/kpi"
+                element={
+                  <ProtectedRoute>
+                    <KPIDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/entities/:id/comments"
+                element={
+                  <ProtectedRoute>
+                    <CommentsThreadWrapper />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </ChakraProvider>
   );
 }
 

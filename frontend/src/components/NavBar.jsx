@@ -1,5 +1,20 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
+import {
+  Box,
+  Flex,
+  HStack,
+  VStack,
+  Link,
+  Button,
+  Image,
+  Text,
+  IconButton,
+  Collapse,
+  useDisclosure,
+  useColorModeValue,
+} from '@chakra-ui/react';
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { AuthContext } from "../context/AuthContext";
 import NotificationBell from "./NotificationBell";
 import Logo from "../assets/logo.svg";
@@ -7,125 +22,248 @@ import "./NavBar.css";
 
 export default function NavBar() {
   const { user, logout } = useContext(AuthContext);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
+  const { isOpen, onToggle, onClose } = useDisclosure();
+  const bgColor = useColorModeValue('white', 'darkBg.100');
+  const borderColor = useColorModeValue('gray.200', 'neonBlue.500');
 
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
+    <Box
+      as="nav"
+      bg={bgColor}
+      borderBottom="2px"
+      borderColor={borderColor}
+      boxShadow="0 4px 12px rgba(14, 165, 233, 0.15)"
+      position="sticky"
+      top={0}
+      zIndex={1000}
+    >
+      <Flex
+        maxW="7xl"
+        mx="auto"
+        px={4}
+        py={3}
+        align="center"
+        justify="space-between"
+      >
         {/* Logo */}
-        <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
-          <img src={Logo} alt="The Solution Desk" className="logo-image" />
+        <Link as={RouterLink} to="/" onClick={onClose}>
+          <Image src={Logo} alt="The Solution Desk" h="50px" w="auto" />
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="navbar-menu">
-          <div className="navbar-nav">
-            <Link to="/ideas/new" className="nav-link">
-              <span className="nav-icon">💡</span>
-              New Idea
+        <HStack spacing={8} display={{ base: 'none', md: 'flex' }}>
+          <HStack spacing={6}>
+            <Link
+              as={RouterLink}
+              to="/ideas/new"
+              color="neonPink.300"
+              fontWeight="bold"
+              textTransform="uppercase"
+              letterSpacing="0.1em"
+              _hover={{
+                color: 'neonPink.400',
+                textShadow: '0 0 10px rgba(241, 70, 255, 0.5)',
+                transform: 'translateY(-1px)',
+              }}
+              transition="all 0.3s ease"
+            >
+              💡 New Idea
             </Link>
-            <Link to="/kanban" className="nav-link">
-              <span className="nav-icon">📋</span>
-              Kanban
+            <Link
+              as={RouterLink}
+              to="/kanban"
+              color="neonBlue.300"
+              fontWeight="bold"
+              textTransform="uppercase"
+              letterSpacing="0.1em"
+              _hover={{
+                color: 'neonBlue.400',
+                textShadow: '0 0 10px rgba(14, 165, 233, 0.5)',
+                transform: 'translateY(-1px)',
+              }}
+              transition="all 0.3s ease"
+            >
+              📋 Kanban
             </Link>
-            <Link to="/sop" className="nav-link">
-              <span className="nav-icon">📚</span>
-              SOPs
+            <Link
+              as={RouterLink}
+              to="/sop"
+              color="neonGreen.300"
+              fontWeight="bold"
+              textTransform="uppercase"
+              letterSpacing="0.1em"
+              _hover={{
+                color: 'neonGreen.400',
+                textShadow: '0 0 10px rgba(34, 197, 94, 0.5)',
+                transform: 'translateY(-1px)',
+              }}
+              transition="all 0.3s ease"
+            >
+              📚 SOPs
             </Link>
-            <Link to="/kpi" className="nav-link">
-              <span className="nav-icon">📊</span>
-              KPI
+            <Link
+              as={RouterLink}
+              to="/kpi"
+              color="neonPurple.300"
+              fontWeight="bold"
+              textTransform="uppercase"
+              letterSpacing="0.1em"
+              _hover={{
+                color: 'neonPurple.400',
+                textShadow: '0 0 10px rgba(168, 85, 247, 0.5)',
+                transform: 'translateY(-1px)',
+              }}
+              transition="all 0.3s ease"
+            >
+              📊 KPI
             </Link>
-          </div>
+          </HStack>
 
-          <div className="navbar-actions">
+          <HStack spacing={4}>
             {user ? (
               <>
                 <NotificationBell />
-                <div className="user-menu">
-                  <span className="user-email">{user.email}</span>
-                  <button onClick={logout} className="btn btn-ghost logout-btn">
-                    Logout
-                  </button>
-                </div>
+                <Text color="neonBlue.200" fontSize="sm">
+                  {user.email}
+                </Text>
+                <Button variant="ghost" onClick={logout} size="sm">
+                  Logout
+                </Button>
               </>
             ) : (
-              <div className="auth-buttons">
-                <Link to="/login" className="btn btn-ghost">
+              <>
+                <Button
+                  as={RouterLink}
+                  to="/login"
+                  variant="ghost"
+                  size="sm"
+                >
                   Login
-                </Link>
-                <Link to="/register" className="btn btn-primary">
+                </Button>
+                <Button
+                  as={RouterLink}
+                  to="/register"
+                  variant="solid"
+                  size="sm"
+                >
                   Get Started
-                </Link>
-              </div>
+                </Button>
+              </>
             )}
-          </div>
-        </div>
+          </HStack>
+        </HStack>
 
         {/* Mobile Menu Button */}
-        <button
-          className={`mobile-menu-btn ${isMobileMenuOpen ? 'active' : ''}`}
-          onClick={toggleMobileMenu}
-          aria-label="Toggle navigation menu"
-          aria-expanded={isMobileMenuOpen}
-        >
-          <span className="hamburger-line"></span>
-          <span className="hamburger-line"></span>
-          <span className="hamburger-line"></span>
-        </button>
-      </div>
+        <IconButton
+          display={{ base: 'flex', md: 'none' }}
+          onClick={onToggle}
+          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+          variant="ghost"
+          aria-label="Toggle Navigation"
+          color="neonPink.300"
+          _hover={{
+            bg: 'neonPink.900',
+            color: 'neonPink.200',
+          }}
+        />
+      </Flex>
 
       {/* Mobile Navigation */}
-      <div className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
-        <div className="mobile-nav">
-          <Link to="/ideas/new" className="mobile-nav-link" onClick={closeMobileMenu}>
-            <span className="nav-icon">💡</span>
-            New Idea
-          </Link>
-          <Link to="/kanban" className="mobile-nav-link" onClick={closeMobileMenu}>
-            <span className="nav-icon">📋</span>
-            Kanban
-          </Link>
-          <Link to="/sop" className="mobile-nav-link" onClick={closeMobileMenu}>
-            <span className="nav-icon">📚</span>
-            SOPs
-          </Link>
-          <Link to="/kpi" className="mobile-nav-link" onClick={closeMobileMenu}>
-            <span className="nav-icon">📊</span>
-            KPI
-          </Link>
-        </div>
+      <Collapse in={isOpen} animateOpacity>
+        <Box
+          pb={4}
+          display={{ md: 'none' }}
+          bg={bgColor}
+          borderTop="1px"
+          borderColor={borderColor}
+        >
+          <VStack spacing={4} align="stretch" px={4}>
+            <Link
+              as={RouterLink}
+              to="/ideas/new"
+              onClick={onClose}
+              color="neonPink.300"
+              fontWeight="bold"
+              py={2}
+              _hover={{ color: 'neonPink.400' }}
+            >
+              💡 New Idea
+            </Link>
+            <Link
+              as={RouterLink}
+              to="/kanban"
+              onClick={onClose}
+              color="neonBlue.300"
+              fontWeight="bold"
+              py={2}
+              _hover={{ color: 'neonBlue.400' }}
+            >
+              📋 Kanban
+            </Link>
+            <Link
+              as={RouterLink}
+              to="/sop"
+              onClick={onClose}
+              color="neonGreen.300"
+              fontWeight="bold"
+              py={2}
+              _hover={{ color: 'neonGreen.400' }}
+            >
+              📚 SOPs
+            </Link>
+            <Link
+              as={RouterLink}
+              to="/kpi"
+              onClick={onClose}
+              color="neonPurple.300"
+              fontWeight="bold"
+              py={2}
+              _hover={{ color: 'neonPurple.400' }}
+            >
+              📊 KPI
+            </Link>
 
-        <div className="mobile-actions">
-          {user ? (
-            <>
-              <div className="mobile-user-info">
-                <span className="user-email">{user.email}</span>
-              </div>
-              <button onClick={() => { logout(); closeMobileMenu(); }} className="btn btn-ghost logout-btn">
-                Logout
-              </button>
-            </>
-          ) : (
-            <div className="mobile-auth-buttons">
-              <Link to="/login" className="btn btn-ghost" onClick={closeMobileMenu}>
-                Login
-              </Link>
-              <Link to="/register" className="btn btn-primary" onClick={closeMobileMenu}>
-                Get Started
-              </Link>
-            </div>
-          )}
-        </div>
-      </div>
-    </nav>
+            {user ? (
+              <VStack spacing={3} align="stretch" pt={4}>
+                <Text color="neonBlue.200" fontSize="sm">
+                  {user.email}
+                </Text>
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    logout();
+                    onClose();
+                  }}
+                  size="sm"
+                >
+                  Logout
+                </Button>
+              </VStack>
+            ) : (
+              <VStack spacing={3} align="stretch" pt={4}>
+                <Button
+                  as={RouterLink}
+                  to="/login"
+                  variant="ghost"
+                  onClick={onClose}
+                  size="sm"
+                >
+                  Login
+                </Button>
+                <Button
+                  as={RouterLink}
+                  to="/register"
+                  variant="solid"
+                  onClick={onClose}
+                  size="sm"
+                >
+                  Get Started
+                </Button>
+              </VStack>
+            )}
+          </VStack>
+        </Box>
+      </Collapse>
+    </Box>
   );
 }

@@ -33,7 +33,7 @@ export default function Register() {
             setSubmitting(true);
             const { confirmPassword, ...registerData } = values;
             const result = await register(registerData);
-            
+
             if (result.success) {
               navigate("/dashboard");
             } else {
@@ -51,48 +51,60 @@ export default function Register() {
             <Form className="auth-form">
               <h2 className="auth-title">Create Account</h2>
               <p className="auth-subtitle">Sign up to get started</p>
-              
+
               <div className="form-group">
-                <Field 
-                  name="email" 
+                <Field
+                  name="email"
                   type="email"
-                  placeholder="Email address" 
+                  placeholder="Email address"
                   className="form-input"
                   disabled={isSubmitting || loading}
                 />
-                <ErrorMessage name="email" component="div" className="error-message" />
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  className="error-message"
+                />
               </div>
-              
+
               <div className="form-group">
-                <Field 
-                  type="password" 
-                  name="password" 
-                  placeholder="Password" 
+                <Field
+                  type="password"
+                  name="password"
+                  placeholder="Password"
                   className="form-input"
                   disabled={isSubmitting || loading}
                 />
-                <ErrorMessage name="password" component="div" className="error-message" />
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className="error-message"
+                />
               </div>
-              
+
               <div className="form-group">
-                <Field 
-                  type="password" 
-                  name="confirmPassword" 
-                  placeholder="Confirm Password" 
+                <Field
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
                   className="form-input"
                   disabled={isSubmitting || loading}
                 />
-                <ErrorMessage name="confirmPassword" component="div" className="error-message" />
+                <ErrorMessage
+                  name="confirmPassword"
+                  component="div"
+                  className="error-message"
+                />
               </div>
-              
-              <button 
-                type="submit" 
+
+              <button
+                type="submit"
                 disabled={isSubmitting || loading}
                 className="auth-button"
               >
                 {isSubmitting ? "Creating account..." : "Sign Up"}
               </button>
-              
+
               <div className="auth-links">
                 <p>
                   Already have an account?{" "}

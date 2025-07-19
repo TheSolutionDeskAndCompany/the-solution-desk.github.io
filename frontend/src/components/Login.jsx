@@ -27,7 +27,7 @@ export default function Login() {
           onSubmit={async (values, { setSubmitting, setFieldError }) => {
             setSubmitting(true);
             const result = await login(values);
-            
+
             if (result.success) {
               navigate("/dashboard");
             } else {
@@ -45,37 +45,45 @@ export default function Login() {
             <Form className="auth-form">
               <h2 className="auth-title">Welcome Back</h2>
               <p className="auth-subtitle">Sign in to your account</p>
-              
+
               <div className="form-group">
-                <Field 
-                  name="email" 
+                <Field
+                  name="email"
                   type="email"
-                  placeholder="Email address" 
+                  placeholder="Email address"
                   className="form-input"
                   disabled={isSubmitting || loading}
                 />
-                <ErrorMessage name="email" component="div" className="error-message" />
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  className="error-message"
+                />
               </div>
-              
+
               <div className="form-group">
-                <Field 
-                  type="password" 
-                  name="password" 
-                  placeholder="Password" 
+                <Field
+                  type="password"
+                  name="password"
+                  placeholder="Password"
                   className="form-input"
                   disabled={isSubmitting || loading}
                 />
-                <ErrorMessage name="password" component="div" className="error-message" />
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className="error-message"
+                />
               </div>
-              
-              <button 
-                type="submit" 
+
+              <button
+                type="submit"
                 disabled={isSubmitting || loading}
                 className="auth-button"
               >
                 {isSubmitting ? "Signing in..." : "Sign In"}
               </button>
-              
+
               <div className="auth-links">
                 <p>
                   Don't have an account?{" "}

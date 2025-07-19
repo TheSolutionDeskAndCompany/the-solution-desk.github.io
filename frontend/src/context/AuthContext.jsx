@@ -34,7 +34,7 @@ const createAxiosInstance = () => {
     },
     (error) => {
       return Promise.reject(error);
-    }
+    },
   );
 
   // Response interceptor to handle 401 errors
@@ -49,7 +49,7 @@ const createAxiosInstance = () => {
         toast.error("Session expired. Please log in again.");
       }
       return Promise.reject(error);
-    }
+    },
   );
 
   return instance;
@@ -90,11 +90,11 @@ export function AuthProvider({ children }) {
       setLoading(true);
       const response = await api.post("/api/auth/login", credentials);
       const { token, user: userData } = response.data;
-      
+
       localStorage.setItem("token", token);
       setUser(userData);
       setIsAuthenticated(true);
-      
+
       toast.success("Login successful!");
       return { success: true, user: userData };
     } catch (error) {
@@ -111,11 +111,11 @@ export function AuthProvider({ children }) {
       setLoading(true);
       const response = await api.post("/api/auth/register", details);
       const { token, user: userData } = response.data;
-      
+
       localStorage.setItem("token", token);
       setUser(userData);
       setIsAuthenticated(true);
-      
+
       toast.success("Registration successful!");
       return { success: true, user: userData };
     } catch (error) {
@@ -157,9 +157,5 @@ export function AuthProvider({ children }) {
     refreshToken,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

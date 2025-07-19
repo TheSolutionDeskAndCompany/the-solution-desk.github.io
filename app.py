@@ -60,6 +60,7 @@ def create_app(config_name=None):
     # Register blueprints with URL prefixes
     from routes.main import main as main_bp
     from routes.auth import auth_bp
+    from routes.api_auth import api_auth_bp
     from routes.projects import projects_bp
     from routes.tools import tools_bp
     from errors import errors as errors_bp
@@ -68,6 +69,7 @@ def create_app(config_name=None):
     
     app.register_blueprint(main_bp)
     app.register_blueprint(auth_bp, url_prefix='/auth')
+    app.register_blueprint(api_auth_bp)  # JWT API auth routes
     app.register_blueprint(projects_bp, url_prefix='/projects')
     app.register_blueprint(tools_bp, url_prefix='/tools')
     app.register_blueprint(errors_bp)

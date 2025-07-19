@@ -1,0 +1,86 @@
+name: Test Coverage
+
+on:
+  push:
+    branches: [ main, frontend-main ]
+  pull_request:
+    branches: [ main, frontend-main ]
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Setup Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          
+      # Setup Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      # Install Python dependencies
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install coverage pytest-cov
+
+      # Install Node.js dependencies
+      - name: Install Node.js dependencies
+        run: npm ci
+        working-directory: frontend
+
+      # Run backend tests with coverage
+      - name: Run backend tests with coverage
+        run: |
+          coverage run -m pytest
+          coverage xml -i
+        env:
+          FLASK_APP: app.py
+          FLASK_ENV: test
+
+      # Run frontend tests with coverage
+      - name: Run frontend tests with coverage
+        run: |
+          npm run test:coverage
+        working-directory: frontend
+        env:
+          CI: true
+
+      # Upload coverage to Codecov
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: .
+          files: ./coverage.xml,./frontend/coverage/lcov.info
+          fail_ci_if_error: true
+          verbose: true
+
+      # Generate coverage reports
+      - name: Generate coverage reports
+        run: |
+          # Generate backend coverage report
+          coverage xml -o coverage.xml
+          # Generate frontend LCOV report
+          cd frontend
+          npx nyc report --reporter=lcov
+
+      # Check coverage thresholds
+      - name: Check coverage thresholds
+        run: |
+          python scripts/check_coverage.py \
+            --backend-coverage coverage.xml \
+            --frontend-coverage frontend/coverage/lcov.info \
+            --min-line-coverage 80 \
+            --min-branch-coverage 75
+        if: ${{ github.event_name == 'pull_request' }}

@@ -27,6 +27,10 @@ class Config:
     UPLOAD_FOLDER = os.path.join(basedir, 'static/uploads')
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB max upload
     
+    # JWT Configuration
+    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', SECRET_KEY)  # Use SECRET_KEY as fallback
+    JWT_ACCESS_TOKEN_EXPIRES = int(os.getenv('JWT_ACCESS_TOKEN_EXPIRES', 3600))  # 1 hour default
+    
     # Email (example, configure as needed)
     MAIL_SERVER = os.getenv('MAIL_SERVER')
     MAIL_PORT = int(os.getenv('MAIL_PORT', 587))

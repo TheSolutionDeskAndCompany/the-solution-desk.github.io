@@ -1,0 +1,19 @@
+{
+  "extends": "@istanbuljs/nyc-config-babel",
+  "include": ["src/**/*.{js,jsx}"],
+  "exclude": [
+    "**/*.test.{js,jsx}",
+    "**/*.spec.{js,jsx}",
+    "**/test-utils.js",
+    "**/setupTests.js",
+    "**/src/index.js",
+    "**/src/reportWebVitals.js"
+  ],
+  "reporter": ["text", "text-summary", "lcov", "clover"],
+  "all": true,
+  "check-coverage": true,
+  "statements": 80,
+  "branches": 75,
+  "functions": 80,
+  "lines": 80
+}

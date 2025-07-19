@@ -1,5 +1,5 @@
 [run]
-source = routes/, models/
+source = .
 omit = 
     */migrations/*
     */tests/*
@@ -7,16 +7,81 @@ omit =
     */venv/*
     */.venv/*
     */node_modules/*
+    */frontend/*
+    */static/*
+    */templates/*
+    */scripts/*
+    */instance/*
+    */build/*
+    */dist/*
+    */docs/*
+    */examples/*
+    *test_*.py
+    */test/*
+    */tests/*
+    */conftest.py
 
 [report]
+# Regexes for lines to exclude from consideration
 exclude_lines =
+    # Have to re-enable the standard pragma
     pragma: no cover
+    
+    # Don't complain about missing debug-only code:
     def __repr__
+    if self\.debug
+    
+    # Don't complain if tests don't hit defensive assertion code:
     raise NotImplementedError
-    if __name__ == .__main__.:
-    pass
     raise ImportError
-    except ImportError:
+    except ImportError
+    if __name__ == .__main__.:
+    
+    # Don't complain if non-runnable code isn't run:
+    if 0:
+    if __name__ == .__main__.:
+    
+    # Don't complain about abstract methods
+    @(abc\.)?abstractmethod
+    
+    # Ignore if/else branches that are only for Python version compatibility
+    if (not )?PY[0-9]+_OR_GREATER.*:
+    
+    # Ignore test files themselves
+    def test_.*:
+    
+    # Ignore pass statements
+    pass
+
+[html]
+# Directory where to save HTML coverage report
+# This directory will be created if it doesn't exist
+directory = htmlcov
+
+[xml]
+# File where to save XML coverage report
+output = coverage.xml
+
+[json]
+# File where to save JSON coverage report
+output = coverage.json
+
+[paths]
+# Configure path mapping for coverage reporting across different environments
+source =
+    .
+    */src
+    */app
+
+[report]
+# Set coverage thresholds (will cause failure if not met)
+fail_under = 80
+
+# Show missing lines in the report
+show_missing = True
+
+# Skip empty files (like __init__.py) from coverage reporting
+skip_empty = True
 
 [html]
 directory = coverage_html_report

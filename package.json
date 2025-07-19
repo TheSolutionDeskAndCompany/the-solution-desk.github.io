@@ -5,7 +5,11 @@
     "prepare": "husky",
     "seed": "python scripts/seed.py",
     "seed:reset": "python scripts/seed.py --mode=reset",
-    "seed:inc": "python scripts/seed.py --mode=incremental"
+    "seed:inc": "python scripts/seed.py --mode=incremental",
+    "test:frontend": "cd frontend && npm run test:coverage",
+    "test:backend": "coverage run -m pytest && coverage report -m",
+    "test:coverage": "npm run test:frontend && npm run test:backend",
+    "test": "npm run test:coverage"
   },
   "devDependencies": {
     "husky": "^8.0.0"

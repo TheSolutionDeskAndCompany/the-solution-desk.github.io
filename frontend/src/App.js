@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
-import theme from './theme';
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
+import theme from "./theme";
 import "./App.css";
 import IdeaForm from "./components/IdeaForm";
 import ProjectKanbanBoard from "./components/ProjectKanbanBoard";

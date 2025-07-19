@@ -13,8 +13,8 @@ import {
   Collapse,
   useDisclosure,
   useColorModeValue,
-} from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+} from "@chakra-ui/react";
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { AuthContext } from "../context/AuthContext";
 import NotificationBell from "./NotificationBell";
 import Logo from "../assets/logo.svg";
@@ -23,8 +23,8 @@ import "./NavBar.css";
 export default function NavBar() {
   const { user, logout } = useContext(AuthContext);
   const { isOpen, onToggle, onClose } = useDisclosure();
-  const bgColor = useColorModeValue('white', 'darkBg.100');
-  const borderColor = useColorModeValue('gray.200', 'neonBlue.500');
+  const bgColor = useColorModeValue("white", "darkBg.100");
+  const borderColor = useColorModeValue("gray.200", "neonBlue.500");
 
   return (
     <Box
@@ -51,7 +51,7 @@ export default function NavBar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <HStack spacing={8} display={{ base: 'none', md: 'flex' }}>
+        <HStack spacing={8} display={{ base: "none", md: "flex" }}>
           <HStack spacing={6}>
             <Link
               as={RouterLink}
@@ -61,9 +61,9 @@ export default function NavBar() {
               textTransform="uppercase"
               letterSpacing="0.1em"
               _hover={{
-                color: 'neonPink.400',
-                textShadow: '0 0 10px rgba(241, 70, 255, 0.5)',
-                transform: 'translateY(-1px)',
+                color: "neonPink.400",
+                textShadow: "0 0 10px rgba(241, 70, 255, 0.5)",
+                transform: "translateY(-1px)",
               }}
               transition="all 0.3s ease"
             >
@@ -77,9 +77,9 @@ export default function NavBar() {
               textTransform="uppercase"
               letterSpacing="0.1em"
               _hover={{
-                color: 'neonBlue.400',
-                textShadow: '0 0 10px rgba(14, 165, 233, 0.5)',
-                transform: 'translateY(-1px)',
+                color: "neonBlue.400",
+                textShadow: "0 0 10px rgba(14, 165, 233, 0.5)",
+                transform: "translateY(-1px)",
               }}
               transition="all 0.3s ease"
             >
@@ -93,9 +93,9 @@ export default function NavBar() {
               textTransform="uppercase"
               letterSpacing="0.1em"
               _hover={{
-                color: 'neonGreen.400',
-                textShadow: '0 0 10px rgba(34, 197, 94, 0.5)',
-                transform: 'translateY(-1px)',
+                color: "neonGreen.400",
+                textShadow: "0 0 10px rgba(34, 197, 94, 0.5)",
+                transform: "translateY(-1px)",
               }}
               transition="all 0.3s ease"
             >
@@ -109,9 +109,9 @@ export default function NavBar() {
               textTransform="uppercase"
               letterSpacing="0.1em"
               _hover={{
-                color: 'neonPurple.400',
-                textShadow: '0 0 10px rgba(168, 85, 247, 0.5)',
-                transform: 'translateY(-1px)',
+                color: "neonPurple.400",
+                textShadow: "0 0 10px rgba(168, 85, 247, 0.5)",
+                transform: "translateY(-1px)",
               }}
               transition="all 0.3s ease"
             >
@@ -132,12 +132,7 @@ export default function NavBar() {
               </>
             ) : (
               <>
-                <Button
-                  as={RouterLink}
-                  to="/login"
-                  variant="ghost"
-                  size="sm"
-                >
+                <Button as={RouterLink} to="/login" variant="ghost" size="sm">
                   Login
                 </Button>
                 <Button
@@ -155,15 +150,15 @@ export default function NavBar() {
 
         {/* Mobile Menu Button */}
         <IconButton
-          display={{ base: 'flex', md: 'none' }}
+          display={{ base: "flex", md: "none" }}
           onClick={onToggle}
           icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
           variant="ghost"
           aria-label="Toggle Navigation"
           color="neonPink.300"
           _hover={{
-            bg: 'neonPink.900',
-            color: 'neonPink.200',
+            bg: "neonPink.900",
+            color: "neonPink.200",
           }}
         />
       </Flex>
@@ -172,7 +167,7 @@ export default function NavBar() {
       <Collapse in={isOpen} animateOpacity>
         <Box
           pb={4}
-          display={{ md: 'none' }}
+          display={{ md: "none" }}
           bg={bgColor}
           borderTop="1px"
           borderColor={borderColor}
@@ -185,7 +180,7 @@ export default function NavBar() {
               color="neonPink.300"
               fontWeight="bold"
               py={2}
-              _hover={{ color: 'neonPink.400' }}
+              _hover={{ color: "neonPink.400" }}
             >
               💡 New Idea
             </Link>
@@ -196,7 +191,7 @@ export default function NavBar() {
               color="neonBlue.300"
               fontWeight="bold"
               py={2}
-              _hover={{ color: 'neonBlue.400' }}
+              _hover={{ color: "neonBlue.400" }}
             >
               📋 Kanban
             </Link>
@@ -207,7 +202,7 @@ export default function NavBar() {
               color="neonGreen.300"
               fontWeight="bold"
               py={2}
-              _hover={{ color: 'neonGreen.400' }}
+              _hover={{ color: "neonGreen.400" }}
             >
               📚 SOPs
             </Link>
@@ -218,7 +213,7 @@ export default function NavBar() {
               color="neonPurple.300"
               fontWeight="bold"
               py={2}
-              _hover={{ color: 'neonPurple.400' }}
+              _hover={{ color: "neonPurple.400" }}
             >
               📊 KPI
             </Link>
